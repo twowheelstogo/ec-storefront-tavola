@@ -73,6 +73,7 @@ class ProductGridPage extends Component {
           title={pageTitle}
           meta={[{ name: "descrition", content: shop && shop.description }]}
         />
+        <div>HOLAewe</div>
         <ProductGrid
           catalogItems={catalogItems}
           currencyCode={(shop && shop.currency && shop.currency.code) || "USD"}
