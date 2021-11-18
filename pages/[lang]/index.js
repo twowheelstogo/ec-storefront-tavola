@@ -4,6 +4,7 @@ import inject from "hocs/inject";
 import Helmet from "react-helmet";
 import withCatalogItems from "containers/catalog/withCatalogItems";
 import ProductGrid from "components/ProductGrid";
+import HorizontalProductCard from "components/HorizontalProductCard"
 import Layout from "components/Layout";
 import { inPageSizes } from "lib/utils/pageSizes";
 import { withApollo } from "lib/apollo/withApollo";
@@ -73,8 +74,17 @@ class ProductGridPage extends Component {
           title={pageTitle}
           meta={[{ name: "descrition", content: shop && shop.description }]}
         />
-        <div>HOLAewe</div>
-        <ProductGrid
+        <HorizontalProductCard
+          catalogItems={catalogItems}
+          currencyCode={(shop && shop.currency && shop.currency.code) || "GTQ"}
+          isLoadingCatalogItems={isLoadingCatalogItems}
+          pageInfo={catalogItemsPageInfo}
+          pageSize={pageSize}
+          setPageSize={this.setPageSize}
+          setSortBy={this.setSortBy}
+          sortBy={sortBy}
+        />
+        {/* <ProductGrid
           catalogItems={catalogItems}
           currencyCode={(shop && shop.currency && shop.currency.code) || "USD"}
           isLoadingCatalogItems={isLoadingCatalogItems}
@@ -83,7 +93,7 @@ class ProductGridPage extends Component {
           setPageSize={this.setPageSize}
           setSortBy={this.setSortBy}
           sortBy={sortBy}
-        />
+        /> */}
       </Layout>
     );
   }

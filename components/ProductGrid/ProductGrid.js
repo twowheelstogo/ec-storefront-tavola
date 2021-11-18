@@ -13,7 +13,7 @@ const styles = (theme) => ({
   filters: {
     justifyContent: "flex-end",
     marginBottom: theme.spacing(2)
-  }
+  },
 });
 
 class ProductGrid extends Component {
@@ -52,8 +52,7 @@ class ProductGrid extends Component {
   }
 
   renderMainArea() {
-    const { catalogItems, isLoadingCatalogItems, pageInfo } = this.props;
-
+    const { catalogItems, isLoadingCatalogItems, pageInfo, classes} = this.props;
     if (isLoadingCatalogItems) return <PageLoading />;
 
     const products = (catalogItems || []).map((item) => item.node.product);
@@ -61,7 +60,7 @@ class ProductGrid extends Component {
 
     return (
       <Fragment>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} >
           <CatalogGrid
             products={products}
             placeholderImageURL="/images/placeholder.gif"
