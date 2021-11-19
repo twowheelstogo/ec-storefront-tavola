@@ -1,15 +1,58 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
-import { Typography, Box} from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles";
+import { Typography, Box } from "@material-ui/core"
+import { withStyles, useTheme } from "@material-ui/core/styles";
 import CatalogGrid from "@reactioncommerce/components/CatalogGrid/v1";
 import PageLoading from "components/PageLoading";
 import PageStepper from "components/PageStepper";
 import PageSizeSelector from "components/PageSizeSelector";
 import SortBySelector from "components/SortBySelector";
-// import ProductGridEmptyMessage from "./ProductGridEmptyMessage";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import styled from "styled-components";
+import { withComponents } from "@reactioncommerce/components-context";
 
+const ProductMediaWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledTitle = styled.div`
+font-size:18px;
+font-weight:700;
+color:#000000;
+display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+`;
+
+const StyledSubtitle = styled.div`
+font-size:14px;
+color:#979797;
+display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+`;
+
+const StyledSubtitleVertical = styled.div`
+font-size:14px;
+color:#979797;
+display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+`;
+
+const CardContainerVertical = styled.div`
+    border: ${({ withBorder }) => withBorder ? "1px solid #979797" : "none"};
+`
+
+const CardContainerHorizontal = styled.div`
+    border: ${({ withBorder }) => withBorder ? "1px solid #979797" : "none"};
+    display: flex;
+    height: 150px;
+`
 const styles = (theme) => ({
     root: {
         display: "flex",
@@ -21,36 +64,10 @@ const styles = (theme) => ({
     },
     imageProduct: {
         height: "100%",
-        width:"150px",
+        width: "150px",
         objectFit: "cover"
     },
-    textTitle: {
-        paddingTop:'15px',
-        paddingLeft: '15px',
-        fontFamily: "Lato",
-        fontWeight: 'bold',
-        fontSize: '18px',
-        lineHeight: '22px',
-        fontStyle: 'normal',
-        paddingBottom: '10px',
-        textOverflow: 'ellipsis',
-    },
-    box:{
-        display: "flex",
-        height: "150px",
-
-    },
-    textdescription:{
-        fontFamily: 'Lato',
-        fontStyle: 'normal',
-        fontWeight: 'normal',
-        paddingLeft: '15px',
-        fontSize: '14px',
-        lineHeight: '17px',
-        color: '#979797'
-    },
-    textPrice:{
-        fontFamily: 'Lato',
+    textPrice: {
         fontStyle: 'normal',
         fontWeight: 800,
         fontSize: '16px',
@@ -59,17 +76,17 @@ const styles = (theme) => ({
         alignItems: "right",
         justifyContent: "flex-end",
     },
-    princingMargin:{
-        marginLeft: "auto",
-        paddingTop: '120px'
-    }
+    cardContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        flex: '1 1 auto',
+        padding: '5px'
+    },
 })
 
-
-
-class HorizontalProductCard extends Component {
-
-    static propTypes = {
+const HorizontalProductCard = props => {
+    HorizontalProductCard.propTypes = {
         catalogItems: PropTypes.arrayOf(PropTypes.object),
         classes: PropTypes.object,
         currencyCode: PropTypes.string.isRequired,
@@ -88,40 +105,73 @@ class HorizontalProductCard extends Component {
         sortBy: PropTypes.string.isRequired
     };
 
+    const { catalogItems, classes, components: { ProgressiveImage } } = props
+    const products = (catalogItems || []).map((items) => items.node.product);
+    if (products.length === 0) return <h1>NO EXISTEN NINGUN PRODUCTO EN LA TIENDA</h1>
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down("xs"));
+    console.log(products)
 
-    render() {
-        const { catalogItems, classes } = this.props
-        console.log(this.props)
-        const products = (catalogItems || []).map((items) => items.node.product);
-        if (products.length === 0) return <h1>NO EXIST</h1>
 
-        console.log(products)
-        return (
-            <Fragment>
-                <Grid container spacing={5} columns={{ xs: 6, sm: 8, md: 6 }} >
+    return (
+        <Fragment>
+            {matches !== true ? (
+                <Grid container spacing={5}  >
                     {
                         products.map((values) => (
-                            <Grid item xs={8} sm={5} md={4} lg={4} key={values._id} >
-                                <Box className={classes.box} style={{ border: "2px solid #dcdcdc"}}>
-                                    <img src={values.primaryImage.URLs.medium}  className={classes.imageProduct} ></img>
+                            <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
+                                <CardContainerHorizontal>
                                     <div>
-                                        <Typography className = {classes.textTitle}>{values.title}</Typography>
-                                        <Typography className = {classes.textdescription}>{values.description}</Typography>
+                                        <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
                                     </div>
-                                    <div className={classes.princingMargin}>
-                                        <Typography className = {classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                    <div className={classes.cardContent}>
+                                        <div>
+                                            <StyledTitle>{values.title}</StyledTitle>
+                                            <StyledSubtitle>{values.description}</StyledSubtitle>
+                                        </div>
+                                        <div>
+                                            <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                        </div>
                                     </div>
-                                </Box>
+                                </CardContainerHorizontal>
                             </Grid>
 
                         ))
                     }
                 </Grid>
+            ) : (
+                <Grid container spacing={2} >
+                    {
+                        products.map((values) => (
+                            <Grid item xs={6} key={values._id}>
+                                <CardContainerVertical withBorder>
+                                    <ProductMediaWrapper>
+                                        <ProgressiveImage
+                                            fit={"cover"}
+                                            altText={"description"}
+                                            presrc={values.primaryImage.URLs.thumbnail}
+                                            srcs={values.primaryImage.URLs}
+                                        />
+                                    </ProductMediaWrapper>
+                                    <div className={classes.cardContent}>
+                                        <div>
+                                            <StyledTitle>{values.title}</StyledTitle>
+                                            <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
+                                        </div>
+                                        <div>
+                                            <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                        </div>
+                                    </div>
+                                </CardContainerVertical>
+                            </Grid>
+                        ))
+                    }
+                </Grid>
+            )}
+        </Fragment >
+    )
 
-            </Fragment>
-        )
-    }
 }
 
 
-export default withStyles(styles)(HorizontalProductCard)
+export default withComponents(withStyles(styles)(HorizontalProductCard))
