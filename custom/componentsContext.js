@@ -65,7 +65,8 @@ import TextInput from "@reactioncommerce/components/TextInput/v1";
 import withLocales from "../lib/utils/withLocales";
 //new components for my 
 import HorizontalProductCard from "components/HorizontalProductCard"
-
+import CatalogLayout from "components/CatalogLayout";
+import HorizontalTagsProducts from "components/HorizontalTagsProducts"
 
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
@@ -121,5 +122,8 @@ export default {
   StockWarning,
   StripeForm,
   TextInput,
-  HorizontalProductCard
+  //new components for my
+  HorizontalProductCard,
+  CatalogLayout,
+  HorizontalTagsProducts
 };

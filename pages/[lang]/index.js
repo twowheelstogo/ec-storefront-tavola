@@ -4,7 +4,6 @@ import inject from "hocs/inject";
 import Helmet from "react-helmet";
 import withCatalogItems from "containers/catalog/withCatalogItems";
 // import ProductGrid from "components/ProductGrid";
-import HorizontalProductCard from "components/HorizontalProductCard"
 import HomePage from "components/HomePage"
 import Layout from "components/Layout";
 import { inPageSizes } from "lib/utils/pageSizes";
@@ -75,6 +74,7 @@ class ProductGridPage extends Component {
 
     return (
       <Layout shop={shop}>
+
         <Helmet
           title={pageTitle}
           meta={[{ name: "descrition", content: shop && shop.description }]}
