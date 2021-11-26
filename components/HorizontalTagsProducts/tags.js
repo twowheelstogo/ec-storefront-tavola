@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import throttle from "lodash/throttle";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -16,13 +16,12 @@ const StyledTabs = withStyles({
             backgroundColor: "#000"
         }
     },
-      scroller: {
+    scroller: {
         flexGrow: "0"
-      }
+    }
 })(props => {
-    console.log(props)
-    return <Tabs {...props} TabIndicatorProps={{ children: <div /> }} scrollButtons="on" 
-    variant={"scrollable"}/>
+    return <Tabs {...props} TabIndicatorProps={{ children: <div /> }} scrollButtons="on"
+        variant={"scrollable"} />
 });
 
 const StyledTab = withStyles(theme => ({
@@ -51,7 +50,8 @@ const useStyles = makeStyles(theme => ({
         top: 0,
         left: 0,
         right: 0,
-        width: "100%"
+        width: "100%",
+        zIndex: 10000
     }
 }));
 
@@ -108,7 +108,6 @@ function useThrottledOnScroll(callback, delay) {
 function ScrollSpyTabs(props) {
     const [activeState, setActiveState] = React.useState(null);
     const { tabsInScroll } = props;
-
     let itemsServer = tabsInScroll.map(tab => {
         const hash = textToHash(tab.text);
         return {
@@ -116,10 +115,9 @@ function ScrollSpyTabs(props) {
             text: tab.text,
             component: tab.component,
             hash: hash,
-            // node:document && document.getElementById(hash)
+            node: typeof window !== "undefined" && document && document.getElementById(hash)
         };
     });
-
     const itemsClientRef = React.useRef([]);
     React.useEffect(() => {
         itemsClientRef.current = itemsServer;

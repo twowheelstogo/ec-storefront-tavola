@@ -96,6 +96,17 @@ const styles = (theme) => ({
         paddingTop: '40px',
         paddingBottom: '40px',
         color: '#000000'
+    },
+    productPadding: {
+        paddingLeft: '10px',
+    },
+    titleNoExistProd: {
+        paddingLeft: '10px',
+        paddingBottom: '100px',
+        color: '#dcdcdc',
+    },
+    productPaddingHorizontaal: {
+        // height: '50vh'
     }
 })
 
@@ -120,100 +131,93 @@ const HorizontalProductCard = props => {
     };
 
     const { tags, classes, components: { ProgressiveImage } } = props
-    const categoryProducts = (tags || []).map((items) => items);
-    if (categoryProducts.length === 0) return <h1>NO EXISTEN NINGUN PRODUCTO EN LA TIENDA</h1>
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
-    console.log(categoryProducts)
-
+    console.log(tags)
 
     return (
         <Fragment>
             {matches !== true ? (
-                categoryProducts.length !== 0 && (
-                    <div>
-                        {
-                            categoryProducts.map((el) => (
-                                <div>
-                                    <Typography className={classes.titleWeb}>
-                                        {el.displayTitle}
-                                    </Typography>
-                                    <Grid container spacing={5}  >
-                                        {
-                                            el.catalogProducts.length !== 0 ? (
-                                                el.catalogProducts.map((values) => (
-                                                    <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
-                                                        <CardContainerHorizontal>
+                <div className={classes.productPaddingHorizontaal}>
+                    {
+                        tags.catalogProducts.length !== 0 && (
+                            <div>
+                                <Typography className={classes.titleWeb}>
+                                    {tags.displayTitle}
+                                </Typography>
+                                <Grid container spacing={5}  >
+                                    {
+                                        tags.length !== 0 && (
+                                            tags.catalogProducts.map((values) => (
+                                                <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
+                                                    <CardContainerHorizontal>
+                                                        <div>
+                                                            <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+                                                        </div>
+                                                        <div className={classes.cardContent}>
                                                             <div>
-                                                                <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+                                                                <StyledTitle>{values.title}</StyledTitle>
+                                                                <StyledSubtitle>{values.description}</StyledSubtitle>
                                                             </div>
-                                                            <div className={classes.cardContent}>
-                                                                <div>
-                                                                    <StyledTitle>{values.title}</StyledTitle>
-                                                                    <StyledSubtitle>{values.description}</StyledSubtitle>
-                                                                </div>
-                                                                <div>
-                                                                    <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                                </div>
+                                                            <div>
+                                                                <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
                                                             </div>
-                                                        </CardContainerHorizontal>
-                                                    </Grid>
-                                                ))
-                                            ) : (
-                                                <div>NO EXISTE PRODUCTOS EN ESTA CATEGORIA</div>
-                                            )
-                                        }
-                                    </Grid>
-                                </div>
-                            ))
-                        }
-                    </div>
-                )
+                                                        </div>
+                                                    </CardContainerHorizontal>
+                                                </Grid>
+                                            ))
+                                        )
+                                    }
+                                </Grid>
+                            </div>
+                        )
+                    }
+                </div>
             ) : (
-                categoryProducts.length !== 0 && (
-                    <div>
-                        {
-                            categoryProducts.map((el) => (
-                                <div>
-                                    <Typography className={classes.titleMobil}>
-                                        {el.displayTitle}
-                                    </Typography>
-                                    <Grid container spacing={2} >
-                                        {
-                                            el.catalogProducts.length !== 0 ? (
-                                                el.catalogProducts.map((values) => (
-                                                    <Grid item xs={6} key={values._id}>
-                                                        <CardContainerVertical >
-                                                            <ProductMediaWrapper>
-                                                                <ProgressiveImage
-                                                                    fit={"cover"}
-                                                                    altText={"description"}
-                                                                    presrc={values.primaryImage.URLs.thumbnail}
-                                                                    srcs={values.primaryImage.URLs}
-                                                                />
-                                                            </ProductMediaWrapper>
-                                                            <div className={classes.cardContent}>
-                                                                <div>
-                                                                    <StyledTitle>{values.title}</StyledTitle>
-                                                                    <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
+                <div className={classes.productPadding}>
+                    {
+                        <div>
+                            {
+                                tags.catalogProducts.length !== 0 && (
+                                    <div>
+                                        <Typography className={classes.titleMobil}>
+                                            {tags.displayTitle}
+                                        </Typography>
+                                        <Grid container spacing={2} >
+                                            {
+                                                tags.catalogProducts.length !== 0 && (
+                                                    tags.catalogProducts.map((values) => (
+                                                        <Grid item xs={6} key={values._id}>
+                                                            <CardContainerVertical >
+                                                                <ProductMediaWrapper>
+                                                                    <ProgressiveImage
+                                                                        fit={"cover"}
+                                                                        altText={"description"}
+                                                                        presrc={values.primaryImage.URLs.thumbnail}
+                                                                        srcs={values.primaryImage.URLs}
+                                                                    />
+                                                                </ProductMediaWrapper>
+                                                                <div className={classes.cardContent}>
+                                                                    <div>
+                                                                        <StyledTitle>{values.title}</StyledTitle>
+                                                                        <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
+                                                                    </div>
+                                                                    <div>
+                                                                        <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                                                    </div>
                                                                 </div>
-                                                                <div>
-                                                                    <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                                </div>
-                                                            </div>
-                                                        </CardContainerVertical>
-                                                    </Grid>
-                                                ))
-                                            ) : (
-                                                <div>NO EXISTEN PRODUCTOS EN ESTA CATEGORIA</div>
-                                            )
-                                        }
-                                    </Grid>
-                                </div>
-                            ))
-                        }
-                    </div>
-                )
+                                                            </CardContainerVertical>
+                                                        </Grid>
+                                                    ))
+                                                )
+                                            }
+                                        </Grid>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    }
+                </div>
             )}
         </Fragment >
     )

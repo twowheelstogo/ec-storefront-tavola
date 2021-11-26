@@ -23,11 +23,6 @@ const CatalogLayout = props => {
         let catalogProducts = [...products]
         return e.catalogProducts = catalogProducts.filter(element => element.tagIds[0] == e._id);
     });
-
-
-    console.log(tags);
-    console.log(catalogItems)
-
     return (
         <Fragment>
             <HorizontalTagsProducts 

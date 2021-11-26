@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ScrollSpyTabs from "./tags";
-const ScrollHorizontal = styled.div`
-overflow: none;
-white-space: nowrap;
-`
-const TagsHorizontal = styled.div`
-    display: inline-block;
-    padding: 5px;
-`
+import HorizontalProductCard from "components/HorizontalProductCard";
 
 const HorizontalTagsProducts = (props) => {
     const {
@@ -24,7 +17,7 @@ const HorizontalTagsProducts = (props) => {
 
     console.log(tags)
     const categoryProducts = (tags || []).map((items) => items);
-
+    if (categoryProducts.length === 0) return <h1>NO EXISTEN NINGUN PRODUCTO EN LA TIENDA</h1>
     return (
         <div
             style={{
@@ -35,16 +28,25 @@ const HorizontalTagsProducts = (props) => {
         >
             {
                 categoryProducts.length !== 0 ? (
-                            <ScrollSpyTabs
-                                tabsInScroll={categoryProducts.map((e) => {
-                                    return {
-                                        text: e.displayTitle,
-                                        component: (
-                                            <p style={{ height: "80vh" }}>tab no 1 - some text</p>
-                                        )
-                                    };
-                                })}
-                            />
+                    <ScrollSpyTabs
+                        tabsInScroll={categoryProducts.map((e) => {
+                            return {
+                                text: e.displayTitle,
+                                component: (
+                                    <HorizontalProductCard 
+                                        tags={e}
+                                        currencyCode
+                                        isLoadingCatalogItems
+                                        pageInfo
+                                        pageSize
+                                        setPageSize
+                                        setSortBy
+                                        sortBy 
+                                    />
+                                )
+                            };
+                        })}
+                    />
                 ) : (
                     <div>NO HAY CATEGORIAS</div>
                 )
