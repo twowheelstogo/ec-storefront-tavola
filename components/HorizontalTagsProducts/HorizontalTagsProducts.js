@@ -15,9 +15,8 @@ const HorizontalTagsProducts = (props) => {
         sortBy,
     } = props;
 
-    console.log(tags)
     const categoryProducts = (tags || []).map((items) => items);
-    if (categoryProducts.length === 0) return <h1>NO EXISTEN NINGUN PRODUCTO EN LA TIENDA</h1>
+ if (categoryProducts.length === 0) return <h1>NO EXISTEN NINGUN PRODUCTO EN LA TIENDA</h1>
     return (
         <div
             style={{
@@ -30,21 +29,21 @@ const HorizontalTagsProducts = (props) => {
                 categoryProducts.length !== 0 ? (
                     <ScrollSpyTabs
                         tabsInScroll={categoryProducts.map((e) => {
-                            return {
-                                text: e.displayTitle,
-                                component: (
-                                    <HorizontalProductCard 
-                                        tags={e}
-                                        currencyCode
-                                        isLoadingCatalogItems
-                                        pageInfo
-                                        pageSize
-                                        setPageSize
-                                        setSortBy
-                                        sortBy 
-                                    />
-                                )
-                            };
+                                return {
+                                    text:e.displayTitle,
+                                    component: (
+                                        <HorizontalProductCard 
+                                            tags={e}
+                                            currencyCode
+                                            isLoadingCatalogItems
+                                            pageInfo
+                                            pageSize
+                                            setPageSize
+                                            setSortBy
+                                            sortBy 
+                                        />
+                                    )
+                                };
                         })}
                     />
                 ) : (

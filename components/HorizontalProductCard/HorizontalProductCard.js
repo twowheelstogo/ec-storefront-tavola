@@ -46,12 +46,22 @@ display: -webkit-box;
 
 const CardContainerVertical = styled.div`
     border: ${({ withBorder }) => withBorder ? "1px solid #979797" : "none"};
+    cursor: pointer;
+    &:hover:{
+        background-color: #EEEEEE;
+        transition: background-color .5s;
+    }
 `
 
 const CardContainerHorizontal = styled.div`
-    border: ${({ withBorder }) => withBorder ? "1px solid #979797" : "none"};
+    border: ${({ withBorder,color}) => withBorder ? color : "none"};
     display: flex;
     height: 150px;
+    cursor: pointer;
+    &:hover {
+        background-color: #EEEEEE;
+        transition: background-color .5s;
+    }
 `
 const styles = (theme) => ({
     root: {
@@ -133,8 +143,7 @@ const HorizontalProductCard = props => {
     const { tags, classes, components: { ProgressiveImage } } = props
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
-    console.log(tags)
-
+    console.log(tags.catalogProducts)
     return (
         <Fragment>
             {matches !== true ? (
@@ -150,9 +159,16 @@ const HorizontalProductCard = props => {
                                         tags.length !== 0 && (
                                             tags.catalogProducts.map((values) => (
                                                 <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
-                                                    <CardContainerHorizontal>
+                                                    <CardContainerHorizontal withBorder color={"#dcdcdc"}>
+                                                        {
+                                                            values.primaryImage !== null ? (
+                                                                <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+
+                                                            ) : (
+                                                                <img src="/images/placeholder.gif" />
+                                                            )
+                                                        }
                                                         <div>
-                                                            <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
                                                         </div>
                                                         <div className={classes.cardContent}>
                                                             <div>
@@ -188,13 +204,13 @@ const HorizontalProductCard = props => {
                                                 tags.catalogProducts.length !== 0 && (
                                                     tags.catalogProducts.map((values) => (
                                                         <Grid item xs={6} key={values._id}>
-                                                            <CardContainerVertical >
+                                                            <CardContainerVertical withBorder color={"#dcdcdc"}>
                                                                 <ProductMediaWrapper>
                                                                     <ProgressiveImage
                                                                         fit={"cover"}
                                                                         altText={"description"}
-                                                                        presrc={values.primaryImage.URLs.thumbnail}
-                                                                        srcs={values.primaryImage.URLs}
+                                                                        presrc={values.primaryImage !== null ? values.primaryImage.URLs.thumbnail : "/images/placeholder.gif"}
+                                                                        srcs={values.primaryImage !== null ? values.primaryImage.URLs : "/images/placeholder.gif"}
                                                                     />
                                                                 </ProductMediaWrapper>
                                                                 <div className={classes.cardContent}>

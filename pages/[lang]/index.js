@@ -70,7 +70,6 @@ class ProductGridPage extends Component {
 
 
 
-    console.log('esto son los valors', tags)
 
     return (
       <Layout shop={shop}>

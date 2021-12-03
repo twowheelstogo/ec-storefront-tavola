@@ -93,13 +93,13 @@ class CartPage extends Component {
       return (
         <Grid item xs={12} md={8}>
           <div className={classes.itemWrapper}>
-            <CartItems
+            {/* <CartItems
               hasMoreCartItems={hasMoreCartItems}
               onLoadMoreCartItems={loadMoreCartItems}
               items={cart.items}
               onChangeCartItemQuantity={this.handleItemQuantityChange}
               onRemoveItemFromCart={this.handleRemoveItem}
-            />
+            /> */}
           </div>
         </Grid>
       );
@@ -115,19 +115,26 @@ class CartPage extends Component {
   renderCartSummary() {
     const { cart, classes } = this.props;
 
+
     if (cart && cart.checkout && cart.checkout.summary && Array.isArray(cart.items) && cart.items.length) {
       const { fulfillmentTotal, itemTotal, surchargeTotal, taxTotal, total } = cart.checkout.summary;
-
+      console.log({
+        fulfillmentTotal,
+        itemTotal,
+        surchargeTotal,
+        taxTotal,
+        total
+      })
       return (
         <Grid item xs={12} md={3}>
-          <CartSummary
+          {/* <CartSummary
             displayShipping={fulfillmentTotal && fulfillmentTotal.displayAmount}
             displaySubtotal={itemTotal && itemTotal.displayAmount}
             displaySurcharge={surchargeTotal && surchargeTotal.displayAmount}
             displayTax={taxTotal && taxTotal.displayAmount}
             displayTotal={total && total.displayAmount}
             itemsQuantity={cart.totalItemQuantity}
-          />
+          /> */}
           <div className={classes.checkoutButtonsContainer}>
             <CheckoutButtons />
           </div>
@@ -152,11 +159,11 @@ class CartPage extends Component {
         />
         <section>
           <Typography className={classes.title} variant="h6" align="center">
-            Shopping Cart
+            Mi Carrito
           </Typography>
           <Grid container spacing={3}>
-            {this.renderCartItems()}
-            {this.renderCartSummary()}
+            {/* {this.renderCartItems()}
+            {this.renderCartSummary()} */}
             <Grid className={classes.customerSupportCopy} item>
               <Typography paragraph variant="caption">
                 Have questions? call <span className={classes.phoneNumber}>1.800.555.5555</span>
