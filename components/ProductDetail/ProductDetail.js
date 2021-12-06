@@ -227,11 +227,9 @@ class ProductDetail extends Component {
               <ProductDetailPrice compareAtPrice={compareAtDisplayPrice} isCompact price={productPrice.displayPrice} />
             </div>
           </div>
-
           <div className={classes.section}>
             <MediaGallery mediaItems={pdpMediaItems} />
           </div>
-
           <div className={classes.section}>
             <VariantList
               onSelectOption={this.handleSelectOption}
@@ -249,7 +247,6 @@ class ProductDetail extends Component {
               variants={product.variants}
             />
           </div>
-
           <div className={classes.section}>
             <ProductDetailDescription>{product.description}</ProductDetailDescription>
           </div>

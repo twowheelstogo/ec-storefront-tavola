@@ -11,6 +11,7 @@ import SortBySelector from "components/SortBySelector";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
+import Link from "components/Link";
 
 const ProductMediaWrapper = styled.div`
   position: relative;
@@ -54,7 +55,7 @@ const CardContainerVertical = styled.div`
 `
 
 const CardContainerHorizontal = styled.div`
-    border: ${({ withBorder,color}) => withBorder ? color : "none"};
+    border: ${({ withBorder, color }) => withBorder ? color : "none"};
     display: flex;
     height: 150px;
     cursor: pointer;
@@ -143,7 +144,7 @@ const HorizontalProductCard = props => {
     const { tags, classes, components: { ProgressiveImage } } = props
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
-    console.log(tags.catalogProducts)
+    console.log(tags)
     return (
         <Fragment>
             {matches !== true ? (
@@ -151,40 +152,45 @@ const HorizontalProductCard = props => {
                     {
                         tags.catalogProducts.length !== 0 && (
                             <div>
-                                <Typography className={classes.titleWeb}>
-                                    {tags.displayTitle}
-                                </Typography>
-                                <Grid container spacing={5}  >
-                                    {
-                                        tags.length !== 0 && (
-                                            tags.catalogProducts.map((values) => (
-                                                <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
-                                                    <CardContainerHorizontal withBorder color={"#dcdcdc"}>
-                                                        {
-                                                            values.primaryImage !== null ? (
-                                                                <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+                                <Link
+                                    href={tags.slug && "/product/[...slugOrId]"}
+                                    as={tags.slug && `/product/${tags.slug}`}
+                                >
+                                    <Typography className={classes.titleWeb}>
+                                        {tags.displayTitle}
+                                    </Typography>
+                                    <Grid container spacing={5}  >
+                                        {
+                                            tags.length !== 0 && (
+                                                tags.catalogProducts.map((values) => (
+                                                    <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
+                                                        <CardContainerHorizontal withBorder color={"#dcdcdc"}>
+                                                            {
+                                                                values.primaryImage !== null ? (
+                                                                    <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
 
-                                                            ) : (
-                                                                <img src="/images/placeholder.gif" />
-                                                            )
-                                                        }
-                                                        <div>
-                                                        </div>
-                                                        <div className={classes.cardContent}>
+                                                                ) : (
+                                                                    <img src="/images/placeholder.gif" />
+                                                                )
+                                                            }
                                                             <div>
-                                                                <StyledTitle>{values.title}</StyledTitle>
-                                                                <StyledSubtitle>{values.description}</StyledSubtitle>
                                                             </div>
-                                                            <div>
-                                                                <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                                            <div className={classes.cardContent}>
+                                                                <div>
+                                                                    <StyledTitle>{values.title}</StyledTitle>
+                                                                    <StyledSubtitle>{values.description}</StyledSubtitle>
+                                                                </div>
+                                                                <div>
+                                                                    <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </CardContainerHorizontal>
-                                                </Grid>
-                                            ))
-                                        )
-                                    }
-                                </Grid>
+                                                        </CardContainerHorizontal>
+                                                    </Grid>
+                                                ))
+                                            )
+                                        }
+                                    </Grid>
+                                </Link>
                             </div>
                         )
                     }

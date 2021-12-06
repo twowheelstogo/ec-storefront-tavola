@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import inject from "hocs/inject";
 import Helmet from "react-helmet";
 import withCatalogItems from "containers/catalog/withCatalogItems";
-// import ProductGrid from "components/ProductGrid";
+import ProductGrid from "components/ProductGrid";
 import HomePage from "components/HomePage"
 import Layout from "components/Layout";
 import { inPageSizes } from "lib/utils/pageSizes";
