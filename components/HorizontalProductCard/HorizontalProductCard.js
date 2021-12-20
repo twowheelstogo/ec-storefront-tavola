@@ -1,17 +1,10 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import { Typography, Box } from "@material-ui/core"
+import { Typography, Grid , useMediaQuery} from "@material-ui/core"
 import { withStyles, useTheme } from "@material-ui/core/styles";
-import CatalogGrid from "@reactioncommerce/components/CatalogGrid/v1";
-import PageLoading from "components/PageLoading";
-import PageStepper from "components/PageStepper";
-import PageSizeSelector from "components/PageSizeSelector";
-import SortBySelector from "components/SortBySelector";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
 import Link from "components/Link";
+import styled from "styled-components";
 
 const ProductMediaWrapper = styled.div`
   position: relative;
@@ -46,7 +39,7 @@ display: -webkit-box;
 `;
 
 const CardContainerVertical = styled.div`
-    border: ${({ withBorder }) => withBorder ? "1px solid #979797" : "none"};
+    border: ${({ withBorder, boderColor }) => withBorder ? boderColor : "none"};
     cursor: pointer;
     &:hover:{
         background-color: #EEEEEE;
@@ -55,7 +48,7 @@ const CardContainerVertical = styled.div`
 `
 
 const CardContainerHorizontal = styled.div`
-    border: ${({ withBorder, color }) => withBorder ? color : "none"};
+    border: ${({ withBorder, boderColor }) => withBorder ? boderColor : "none"};
     display: flex;
     height: 150px;
     cursor: pointer;
@@ -65,14 +58,6 @@ const CardContainerHorizontal = styled.div`
     }
 `
 const styles = (theme) => ({
-    root: {
-        display: "flex",
-        flexGrow: 1,
-        flexDirection: "row",
-        background: theme.palette.background.cards,
-        padding: "10px",
-        borderRadius: "10px"
-    },
     imageProduct: {
         height: "100%",
         width: "150px",
@@ -111,14 +96,6 @@ const styles = (theme) => ({
     productPadding: {
         paddingLeft: '10px',
     },
-    titleNoExistProd: {
-        paddingLeft: '10px',
-        paddingBottom: '100px',
-        color: '#dcdcdc',
-    },
-    productPaddingHorizontaal: {
-        // height: '50vh'
-    }
 })
 
 const HorizontalProductCard = props => {
@@ -144,7 +121,7 @@ const HorizontalProductCard = props => {
     const { tags, classes, components: { ProgressiveImage } } = props
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
-    console.log(tags)
+    
     return (
         <Fragment>
             {matches !== true ? (
@@ -164,7 +141,7 @@ const HorizontalProductCard = props => {
                                             tags.length !== 0 && (
                                                 tags.catalogProducts.map((values) => (
                                                     <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
-                                                        <CardContainerHorizontal withBorder color={"#dcdcdc"}>
+                                                        <CardContainerHorizontal >
                                                             {
                                                                 values.primaryImage !== null ? (
                                                                     <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
@@ -210,7 +187,7 @@ const HorizontalProductCard = props => {
                                                 tags.catalogProducts.length !== 0 && (
                                                     tags.catalogProducts.map((values) => (
                                                         <Grid item xs={6} key={values._id}>
-                                                            <CardContainerVertical withBorder color={"#dcdcdc"}>
+                                                            <CardContainerVertical>
                                                                 <ProductMediaWrapper>
                                                                     <ProgressiveImage
                                                                         fit={"cover"}

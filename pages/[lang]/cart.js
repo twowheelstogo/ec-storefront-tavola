@@ -15,9 +15,9 @@ import Layout from "components/Layout";
 import Router from "translations/i18nRouter";
 import PageLoading from "components/PageLoading";
 import { withApollo } from "lib/apollo/withApollo";
-
 import fetchPrimaryShop from "staticUtils/shop/fetchPrimaryShop";
 import fetchTranslations from "staticUtils/translations/fetchTranslations";
+import { withComponents } from "@reactioncommerce/components-context";
 
 const styles = (theme) => ({
   cartEmptyMessageContainer: {
@@ -87,7 +87,7 @@ class CartPage extends Component {
   };
 
   renderCartItems() {
-    const { cart, classes, hasMoreCartItems, loadMoreCartItems } = this.props;
+    const { cart, classes, hasMoreCartItems, loadMoreCartItems} = this.props;
 
     if (cart && Array.isArray(cart.items) && cart.items.length) {
       return (
@@ -146,7 +146,7 @@ class CartPage extends Component {
   }
 
   render() {
-    const { cart, classes, shop } = this.props;
+    const { cart, classes, shop,components:{ModifierGroupItem}} = this.props;
     // when a user has no item in cart in a new session, this.props.cart is null
     // when the app is still loading, this.props.cart is undefined
     if (typeof cart === "undefined") return <PageLoading delay={0} />;
@@ -161,10 +161,18 @@ class CartPage extends Component {
           <Typography className={classes.title} variant="h6" align="center">
             Mi Carrito
           </Typography>
-          <Grid container spacing={3}>
+
+          {/* HERE COMPONENT DETAIL PRODUCT BUY */}
+
+          <ModifierGroupItem/>
+
+
+
+
+          {/* <Grid container spacing={3}> */}
             {/* {this.renderCartItems()}
             {this.renderCartSummary()} */}
-            <Grid className={classes.customerSupportCopy} item>
+            {/* <Grid className={classes.customerSupportCopy} item>
               <Typography paragraph variant="caption">
                 Have questions? call <span className={classes.phoneNumber}>1.800.555.5555</span>
               </Typography>
@@ -175,7 +183,7 @@ class CartPage extends Component {
                 <Link href="#">Return policy</Link>
               </Typography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </section>
       </Layout>
     );
@@ -197,4 +205,4 @@ export async function getServerSideProps({ params: { lang } }) {
   };
 }
 
-export default withApollo()(withStyles(styles)(withCart(inject("uiStore")(CartPage))));
+export default withApollo()(withComponents(withStyles(styles)(withCart(inject("uiStore")(CartPage)))));

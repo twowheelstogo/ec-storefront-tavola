@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import CatalogLayout from "components/CatalogLayout";
-
+import { withComponents } from "@reactioncommerce/components-context";
 
 const HomePage = props => {
     const {
@@ -12,6 +11,7 @@ const HomePage = props => {
         pageSize,
         tags,
         setPageSize,
+        components:{CatalogLayout},
         setSortBy,
         sortBy
     } = props;
@@ -43,4 +43,4 @@ HomePage.propTypes = {
     onChangeCartItemsQuantity: PropTypes.func.isRequired
 };
 
-export default HomePage;
+export default withComponents(HomePage);

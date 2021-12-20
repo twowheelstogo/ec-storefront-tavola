@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ScrollSpyTabs from "./tags";
-import HorizontalProductCard from "components/HorizontalProductCard";
+import { withComponents } from "@reactioncommerce/components-context";
 
 const HorizontalTagsProducts = (props) => {
     const {
@@ -12,6 +12,7 @@ const HorizontalTagsProducts = (props) => {
         pageSize,
         setPageSize,
         setSortBy,
+        components: {HorizontalProductCard},
         sortBy,
     } = props;
 
@@ -54,4 +55,4 @@ const HorizontalTagsProducts = (props) => {
     )
 };
 
-export default HorizontalTagsProducts;
+export default withComponents(HorizontalTagsProducts);
