@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from "styled-components";
-import { Divider, Box, Fab, colors } from "@material-ui/core";
-import { Plus,Minus } from "mdi-material-ui";
+import { Divider, Box, Fab, Grid } from "@material-ui/core";
+import { Plus, Minus } from "mdi-material-ui";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -74,7 +74,7 @@ width: 100%;
 margin: 0 auto;
 position: absolute;
 padding-right: ${({ padding }) => padding ? padding : "0px"};
-padding-bottom: ${({bottomP})=> bottomP ? bottomP : "0px"};
+padding-bottom: ${({ bottomP }) => bottomP ? bottomP : "0px"};
 `;
 
 const datos = [
@@ -162,64 +162,65 @@ const ModifierGroupItem = (props) => {
     let backgrounColorComponent = "#1D0D13"
     return (
         <Fragment>
+
             {
                 datos.length !== 0 && (
                     <Fragment>
                         <div>
                             {datos.map((el) => (
-                               <Div>
+                                <Div>
                                     <GeneralTableCell>
-                                    <TableCellFirst>
-                                        <TitleProduct>el.productTitle</TitleProduct>
-                                        {el.options.map((prod) => (
-                                            <Div>
-                                                <OptionProductTitle>prod.title</OptionProductTitle>
-                                                <OptionProductSelect>
-                                                    {prod.selectProduct}
-                                                </OptionProductSelect>
-                                            </Div>
-                                        ))}
-                                    </TableCellFirst>
-                                    <TableCellSecond>
-                                        <ProductCost>Q26.00 </ProductCost>
-                                        <ProductTotalCost> {`Total (2) Q52.00`} </ProductTotalCost>
-                                        <DesignGroupItems padding={"10px"} bottomP={"10px"}>
-                                            <Box>
-                                                <Fab 
-                                                    key={el.productTitle}   
-                                                     style={{
-                                                        width: "35px",
-                                                        height: "30px",
-                                                        color: colorComponent,
-                                                        backgroundColor: backgrounColorComponent
-                                                    }} 
-                                                    aria-label="add"
-                                                >
-                                                   <Plus/>
-                                                </Fab>
-                                            </Box>
-                                        </DesignGroupItems>
-                                        <DesignGroupItems padding={"65px"} bottomP={"15px"}>{el.account}</DesignGroupItems>
-                                        <DesignGroupItems padding={"90px"} bottomP={"10px"}>
-                                            <Box>
-                                                <Fab 
-                                                    key={el.productTitle}
-                                                    style={{
-                                                        width: "35px",
-                                                        height: "30px",
-                                                        color: colorComponent,
-                                                        backgroundColor: backgrounColorComponent
-                                                    }}
-                                                    aria-label="add" 
-                                                >
-                                                    <Minus/>
-                                                </Fab>
-                                            </Box>
-                                        </DesignGroupItems>
-                                    </TableCellSecond>
-                                </GeneralTableCell>
-                                <Divider/>
-                               </Div>
+                                        <TableCellFirst>
+                                            <TitleProduct>el.productTitle</TitleProduct>
+                                            {el.options.map((prod) => (
+                                                <Div>
+                                                    <OptionProductTitle>prod.title</OptionProductTitle>
+                                                    <OptionProductSelect>
+                                                        {prod.selectProduct}
+                                                    </OptionProductSelect>
+                                                </Div>
+                                            ))}
+                                        </TableCellFirst>
+                                        <TableCellSecond>
+                                            <ProductCost>Q26.00 </ProductCost>
+                                            <ProductTotalCost> {`Total (2) Q52.00`} </ProductTotalCost>
+                                            <DesignGroupItems padding={"10px"} bottomP={"10px"}>
+                                                <Box>
+                                                    <Fab
+                                                        key={el.productTitle}
+                                                        style={{
+                                                            width: "35px",
+                                                            height: "30px",
+                                                            color: colorComponent,
+                                                            backgroundColor: backgrounColorComponent
+                                                        }}
+                                                        aria-label="add"
+                                                    >
+                                                        <Plus />
+                                                    </Fab>
+                                                </Box>
+                                            </DesignGroupItems>
+                                            <DesignGroupItems padding={"65px"} bottomP={"15px"}>{el.account}</DesignGroupItems>
+                                            <DesignGroupItems padding={"90px"} bottomP={"10px"}>
+                                                <Box>
+                                                    <Fab
+                                                        key={el.productTitle}
+                                                        style={{
+                                                            width: "35px",
+                                                            height: "30px",
+                                                            color: colorComponent,
+                                                            backgroundColor: backgrounColorComponent
+                                                        }}
+                                                        aria-label="add"
+                                                    >
+                                                        <Minus />
+                                                    </Fab>
+                                                </Box>
+                                            </DesignGroupItems>
+                                        </TableCellSecond>
+                                    </GeneralTableCell>
+                                    <Divider />
+                                </Div>
                             ))}
                         </div>
 

@@ -67,7 +67,7 @@ import withLocales from "../lib/utils/withLocales";
 import HorizontalProductCard from "components/HorizontalProductCard";
 import CatalogLayout from "components/CatalogLayout";
 import HorizontalTagsProducts from "components/HorizontalTagsProducts";
-import ModifierGroupItem from "components/ModifierGroupItem";
+import CardItem from "components/CardItem";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -126,5 +126,5 @@ export default {
   HorizontalProductCard,
   CatalogLayout,
   HorizontalTagsProducts,
-  ModifierGroupItem
+  CardItem
 };
