@@ -146,7 +146,7 @@ class CartPage extends Component {
   }
 
   render() {
-    const { cart, classes, shop,components:{cartItem}} = this.props;
+    const { cart, classes, shop,components:{CardItem}} = this.props;
     // when a user has no item in cart in a new session, this.props.cart is null
     // when the app is still loading, this.props.cart is undefined
     if (typeof cart === "undefined") return <PageLoading delay={0} />;
@@ -166,7 +166,7 @@ class CartPage extends Component {
 
         <Grid container>
           <Grid item xs = {12} md = {6}>
-            <cartItem/>
+            <CardItem/>
           </Grid>
           <Grid item xs = {12} md = {6}>
             <div>HOLA MUNDO</div>
