@@ -58,6 +58,7 @@ class ProductGridPage extends Component {
       uiStore,
       tags
     } = this.props;
+    console.log('tags en el index',tags)
     const pageSize = query && inPageSizes(query.limit) ? parseInt(query.limit, 10) : uiStore.pageSize;
     const sortBy = query && query.sortby ? query.sortby : uiStore.sortBy;
     let pageTitle;
@@ -73,22 +74,10 @@ class ProductGridPage extends Component {
 
     return (
       <Layout shop={shop}>
-
         <Helmet
           title={pageTitle}
           meta={[{ name: "descrition", content: shop && shop.description }]}
         />
-        {/* <HorizontalProductCard
-          catalogItems={catalogItems}
-          currencyCode={(shop && shop.currency && shop.currency.code) || "GTQ"}
-          isLoadingCatalogItems={isLoadingCatalogItems}
-          pageInfo={catalogItemsPageInfo}
-          pageSize={pageSize}
-          tags={tags}
-          setPageSize={this.setPageSize}
-          setSortBy={this.setSortBy}
-          sortBy={sortBy}
-        /> */}
         <HomePage
           catalogItems={catalogItems}
           currencyCode={(shop && shop.currency && shop.currency.code) || "GTQ"}

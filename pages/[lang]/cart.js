@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import CartEmptyMessage from "@reactioncommerce/components/CartEmptyMessage/v1";
-import CartSummary from "@reactioncommerce/components/CartSummary/v1";
+import CartSummary from "components/CartSummary";
 import withCart from "containers/cart/withCart";
 import CartItems from "components/CartItems";
 import CheckoutButtons from "components/CheckoutButtons";
@@ -87,20 +87,20 @@ class CartPage extends Component {
   };
 
   renderCartItems() {
-    const { cart, classes, hasMoreCartItems, loadMoreCartItems} = this.props;
+    const { cart, classes, hasMoreCartItems, loadMoreCartItems } = this.props;
 
     if (cart && Array.isArray(cart.items) && cart.items.length) {
       return (
         <Grid item xs={12} md={8}>
-          <div className={classes.itemWrapper}>
-            {/* <CartItems
+          {/* <div className={classes.itemWrapper}> */}
+            <CartItems
               hasMoreCartItems={hasMoreCartItems}
               onLoadMoreCartItems={loadMoreCartItems}
               items={cart.items}
               onChangeCartItemQuantity={this.handleItemQuantityChange}
               onRemoveItemFromCart={this.handleRemoveItem}
-            /> */}
-          </div>
+            />
+          {/* </div> */}
         </Grid>
       );
     }
@@ -127,16 +127,16 @@ class CartPage extends Component {
       })
       return (
         <Grid item xs={12} md={3}>
-          {/* <CartSummary
+          <CartSummary
             displayShipping={fulfillmentTotal && fulfillmentTotal.displayAmount}
             displaySubtotal={itemTotal && itemTotal.displayAmount}
             displaySurcharge={surchargeTotal && surchargeTotal.displayAmount}
             displayTax={taxTotal && taxTotal.displayAmount}
             displayTotal={total && total.displayAmount}
             itemsQuantity={cart.totalItemQuantity}
-          /> */}
+          />
           <div className={classes.checkoutButtonsContainer}>
-            <CheckoutButtons />
+            <CheckoutButtons/>
           </div>
         </Grid>
       );
@@ -146,7 +146,7 @@ class CartPage extends Component {
   }
 
   render() {
-    const { cart, classes, shop,components:{CardItem}} = this.props;
+    const { cart, classes, shop, components: { CartItem, CartSummary } } = this.props;
     // when a user has no item in cart in a new session, this.props.cart is null
     // when the app is still loading, this.props.cart is undefined
     if (typeof cart === "undefined") return <PageLoading delay={0} />;
@@ -157,29 +157,23 @@ class CartPage extends Component {
           title={`Cart | ${shop && shop.name}`}
           meta={[{ name: "description", content: shop && shop.description }]}
         />
+        
+        {/* <Grid container>
+          <Grid item xs = {12} md = {6}>
+            <CartItem/>
+          </Grid>
+          <Grid item xs = {12} md = {6}>
+            <CartSummary/>
+          </Grid>
+        </Grid> */}
         <section>
           <Typography className={classes.title} variant="h6" align="center">
             Mi Carrito
           </Typography>
-
-          {/* HERE COMPONENT DETAIL PRODUCT BUY */}
-
-        <Grid container>
-          <Grid item xs = {12} md = {6}>
-            <CardItem/>
-          </Grid>
-          <Grid item xs = {12} md = {6}>
-            <div>HOLA MUNDO</div>
-          </Grid>
-        </Grid>
-
-
-
-
-          {/* <Grid container spacing={3}> */}
-            {/* {this.renderCartItems()}
-            {this.renderCartSummary()} */}
-            {/* <Grid className={classes.customerSupportCopy} item>
+          <Grid container spacing={3}>
+            {this.renderCartItems()}
+            {this.renderCartSummary()}
+            <Grid className={classes.customerSupportCopy} item>
               <Typography paragraph variant="caption">
                 Have questions? call <span className={classes.phoneNumber}>1.800.555.5555</span>
               </Typography>
@@ -190,13 +184,12 @@ class CartPage extends Component {
                 <Link href="#">Return policy</Link>
               </Typography>
             </Grid>
-          </Grid> */}
+          </Grid>
         </section>
       </Layout>
     );
   }
 }
-
 /**
  *  Server props for the cart route
  *
