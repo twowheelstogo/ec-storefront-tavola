@@ -14,15 +14,25 @@ const StyledTitle = styled.div`
 font-size:18px;
 font-weight:700;
 color:#000000;
+padding-left: 10px;
 display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;  
   overflow: hidden;
 `;
-
+const StyledTitleVertical = styled.div`
+font-size:18px;
+font-weight:700;
+color:#000000;
+display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+`;
 const StyledSubtitle = styled.div`
 font-size:14px;
 color:#979797;
+padding-left: 10px;
 display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;  
@@ -144,91 +154,91 @@ const HorizontalProductCard = props => {
                                                         href={values.slug && "/product/[...slugOrId]"}
                                                         as={values.slug && `/product/${values.slug}`}
                                                     >
-                                                    <CardContainerHorizontal >
-                                                        {
-                                                            values.primaryImage !== null ? (
-                                                                <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+                                                        <CardContainerHorizontal >
+                                                            {
+                                                                values.primaryImage !== null ? (
+                                                                    <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
 
-                                                            ) : (
-                                                                <img src="/images/placeholder.gif" />
-                                                            )
-                                                        }
-                                                        <div>
-                                                        </div>
-                                                        <div className={classes.cardContent}>
+                                                                ) : (
+                                                                    <img src="/images/placeholder.gif" />
+                                                                )
+                                                            }
                                                             <div>
-                                                                <StyledTitle>{values.title}</StyledTitle>
-                                                                <StyledSubtitle>{values.description}</StyledSubtitle>
                                                             </div>
-                                                            <div>
-                                                                <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                            </div>
-                                                        </div>
-                                                    </CardContainerHorizontal>
-                                                </Link>
-
-                                                    </Grid>
-                                ))
-                                )
-                                    }
-                            </Grid>
-
-                            </div>
-            )
-                    }
-        </div>
-    ) : (
-        <div className={classes.productPadding}>
-            {
-                <div>
-                    {
-                        tags.catalogProducts.length !== 0 && (
-                            <div>
-                                <Typography className={classes.titleMobil}>
-                                    {tags.displayTitle}
-                                </Typography>
-                                <Grid container spacing={2} >
-                                    {
-                                        tags.catalogProducts.length !== 0 && (
-                                            tags.catalogProducts.map((values) => (
-                                                <Link
-                                                    href={values.slug && "/product/[...slugOrId]"}
-                                                    as={values.slug && `/product/${values.slug}`}
-                                                >
-                                                    <Grid item xs={6} key={values._id}>
-                                                        <CardContainerVertical>
-                                                            <ProductMediaWrapper>
-                                                                <ProgressiveImage
-                                                                    fit={"cover"}
-                                                                    altText={"description"}
-                                                                    presrc={values.primaryImage !== null ? values.primaryImage.URLs.thumbnail : "/images/placeholder.gif"}
-                                                                    srcs={values.primaryImage !== null ? values.primaryImage.URLs : "/images/placeholder.gif"}
-                                                                />
-                                                            </ProductMediaWrapper>
                                                             <div className={classes.cardContent}>
                                                                 <div>
                                                                     <StyledTitle>{values.title}</StyledTitle>
-                                                                    <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
+                                                                    <StyledSubtitle>{values.description}</StyledSubtitle>
                                                                 </div>
                                                                 <div>
                                                                     <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
                                                                 </div>
                                                             </div>
-                                                        </CardContainerVertical>
-                                                    </Grid>
-                                                </Link>
+                                                        </CardContainerHorizontal>
+                                                    </Link>
+
+                                                </Grid>
                                             ))
                                         )
                                     }
                                 </Grid>
+
                             </div>
                         )
                     }
                 </div>
+            ) : (
+                <div className={classes.productPadding}>
+                    {
+                        <div>
+                            {
+                                tags.catalogProducts.length !== 0 && (
+                                    <div>
+                                        <Typography className={classes.titleMobil}>
+                                            {tags.displayTitle}
+                                        </Typography>
+                                        <Grid container spacing={2} >
+                                            {
+                                                tags.catalogProducts.length !== 0 && (
+                                                    tags.catalogProducts.map((values) => (
+                                                        <Grid item xs={6} key={values._id}>
+                                                            <Link
+                                                                href={values.slug && "/product/[...slugOrId]"}
+                                                                as={values.slug && `/product/${values.slug}`}
+                                                            >
+                                                                <CardContainerVertical>
+                                                                    <ProductMediaWrapper>
+                                                                        <ProgressiveImage
+                                                                            fit={"cover"}
+                                                                            altText={"description"}
+                                                                            presrc={values.primaryImage !== null ? values.primaryImage.URLs.thumbnail : "/images/placeholder.gif"}
+                                                                            srcs={values.primaryImage !== null ? values.primaryImage.URLs : "/images/placeholder.gif"}
+                                                                        />
+                                                                    </ProductMediaWrapper>
+                                                                    <div className={classes.cardContent}>
+                                                                        <div>
+                                                                            <StyledTitleVertical>{values.title}</StyledTitleVertical>
+                                                                            <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
+                                                                        </div>
+                                                                        <div>
+                                                                            <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
+                                                                        </div>
+                                                                    </div>
+                                                                </CardContainerVertical>
+                                                            </Link>
+                                                        </Grid>
+                                                    ))
+                                                )
+                                            }
+                                        </Grid>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    }
+                </div>
+            )
             }
-        </div>
-    )
-}
         </Fragment >
     )
 
