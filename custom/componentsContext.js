@@ -34,7 +34,7 @@ import AddressReview from "@reactioncommerce/components/AddressReview/v1";
 import BadgeOverlay from "@reactioncommerce/components/BadgeOverlay/v1";
 import Button from "@reactioncommerce/components/Button/v1";
 // import CartItem from "@reactioncommerce/components/CartItem/v1";
-import CartItemDetail from "@reactioncommerce/components/CartItemDetail/v1";
+// import CartItemDetail from "@reactioncommerce/components/CartItemDetail/v1";
 import CartItems from "@reactioncommerce/components/CartItems/v1";
 // import CartSummary from "@reactioncommerce/components/CartSummary/v1";
 import CatalogGrid from "@reactioncommerce/components/CatalogGrid/v1";
@@ -73,6 +73,7 @@ import CartSummary from "components/CartSummary";
 import CartItemsList from "components/CartItemsList";
 import QuantityInput from "components/QuantityInput";
 import Price from "components/Price";
+import CartItemDetail from "components/CartItemDetail";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 

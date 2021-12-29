@@ -48,20 +48,7 @@ font-weight: 700;
 
 const ItemContentSubtotalTitle = styled.div``;
 
-const OptionProductSelect = styled.div`
-font-size: 14px;
-text-align: left; 
-display: flex;
-padding-bottom: 7px; 
-`;
 
-const OptionProductTitle = styled.div`
-font-size: 14px;
-text-align: left; 
-display: flex;
-font-weight: 800;
-padding-bottom: 5px; 
-`
 class CartItem extends Component {
     static propTypes = {
         /**
@@ -291,32 +278,10 @@ class CartItem extends Component {
                                     inventoryQuantity={currentQuantity}
                                     isLowInventoryQuantity={isLowQuantity}
                                 />
+                            
                             </ItemContentDetailInfo>
                         </ItemContentDetailInner>
-                        <OptionProductTitle>
-                            Duos estandar
-                        </OptionProductTitle>
-                        <OptionProductSelect>
-                            Muffin de vainilla
-                        </OptionProductSelect>
-                        <OptionProductTitle>
-                            Bebidas duos
-                        </OptionProductTitle>
-                        <OptionProductSelect>
-                            Café americano
-                        </OptionProductSelect>
-                        <OptionProductTitle>
-                            Elige tipo de leche
-                        </OptionProductTitle>
-                        <OptionProductSelect>
-                            Entera
-                        </OptionProductSelect>
-                        <OptionProductTitle>
-                            Elige el tipo de azúcar
-                        </OptionProductTitle>
-                        <OptionProductSelect>
-                            Sin azúcar
-                        </OptionProductSelect>
+                       
                     </ItemContentDetail>
                 </ItemContent>
                 <ItemContentPrice isMiniCart={isMiniCart}>
