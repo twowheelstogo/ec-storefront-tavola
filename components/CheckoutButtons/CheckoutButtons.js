@@ -1,9 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Button from "@reactioncommerce/components/Button/v1";
+// import Button from "@reactioncommerce/components/Button/v1";
 import Router from "translations/i18nRouter";
+import { Button } from "@material-ui/core";
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
+import { addTypographyStyles, applyTheme } from "@reactioncommerce/components/utils";
 
-export default class CheckoutButtons extends Component {
+const Div = styled.div``;
+
+const styles = (theme) => ({
+  purchasingProcess:{
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.light,
+  
+  },
+  buyHome:{
+    backgroundColor: "#F6F6F6",
+    color: '#1D0D13',
+    border: '1px solid #1D0D13',
+  }
+})
+
+class CheckoutButtons extends Component {
   static propTypes = {
     /**
      * Set to `true` to prevent the button from calling `onClick` when clicked
@@ -25,7 +44,8 @@ export default class CheckoutButtons extends Component {
 
   static defaultProps = {
     primaryButtonRoute: "/cart/checkout",
-    primaryButtonText: "Checkout"
+    primaryButtonText: "Procesar a la compra",
+    secondButtonText: "Seguir comprando"
   };
 
   handleOnClick = () => {
@@ -37,19 +57,37 @@ export default class CheckoutButtons extends Component {
     const {
       isDisabled,
       primaryClassName,
-      primaryButtonText
+      primaryButtonText,
+      secondButtonText,
+      classes:{purchasingProcess,buyHome}
     } = this.props;
+    
 
     return (
-      <Button
-        actionType="important"
-        className={primaryClassName}
-        isDisabled={isDisabled}
-        isFullWidth
-        onClick={this.handleOnClick}
-      >
-        {primaryButtonText}
-      </Button>
+      <Div>
+        <Div style={{paddingBottom:'10px'}}>
+          <Button
+            fullWidth
+            className={buyHome}
+            variant="contained"
+            disableRipple
+
+          >
+            {secondButtonText}
+          </Button>
+        </Div>
+        <Button
+          fullWidth
+          className={purchasingProcess}
+          onClick={this.handleOnClick}
+          variant="contained"
+          disableRipple
+        >
+          {primaryButtonText}
+        </Button>
+      </Div>
     );
   }
 }
+
+export default withStyles(styles)(CheckoutButtons);

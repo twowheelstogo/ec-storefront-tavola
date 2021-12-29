@@ -15,7 +15,10 @@ const styles = (theme) => ({
     marginRight: "auto"
   },
   article: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(0)
+    }
   }
 });
 
