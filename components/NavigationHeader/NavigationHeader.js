@@ -30,7 +30,6 @@ const styles = (theme) => ({
     marginTop: "2%",
   },
   searchbar: {
-    color: "white",
     ["@media (max-width:599px)"]: {
       marginLeft: "auto",
       marginRight: "auto",
@@ -162,7 +161,7 @@ class NavigationHeader extends Component {
       shop,      
       cart,
       BanderaSlideHero,
-      width,      
+      width,    
       components: { SearchBar },
       components: { IconsActions },
       components: { SlideHero },
@@ -184,7 +183,7 @@ class NavigationHeader extends Component {
 
                     {/* Bara de busqueda */}
                     <Grid item xs={8} sm={6} md={8} lg={8} xl={8} className={classes.searchbar}>
-                      <SearchBar Metodo={MetodoBusqueda} />
+                      <SearchBar  Metodo={MetodoBusqueda} />
                     </Grid>
 
                     {/* Iconos */}

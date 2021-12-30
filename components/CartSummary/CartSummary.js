@@ -182,7 +182,7 @@ class CartSummary extends Component {
   }
 
   static defaultProps = {
-    cartTitleText: "Resúmen De Compra",
+    cartTitleText: "Resumen De Compra",
     freeText: "FREE",
     itemLabelText: "Items",
     itemsText: "items",

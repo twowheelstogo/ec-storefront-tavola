@@ -28,7 +28,8 @@ const styles = (theme) => ({
     borderRightStyle: "solid"
   },
   TextField_:{
-    backgroundColor: theme.palette.background.theme_,
+    backgroundColor: "#FFFFFF",
+    borderRadius: '4px'
   }
 });
 

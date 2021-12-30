@@ -10,7 +10,7 @@ const date = new Date();
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.theme_,    
-    color: theme.palette.colors.TextThemeTitle,
+    color: theme.palette.colors.buttonBorderColor,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(10),

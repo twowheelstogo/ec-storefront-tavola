@@ -37,7 +37,8 @@ const theme = createMuiTheme({
       //el main es para los que cambian de color en el centro
       Modal: "#1D0D13",
       //Fondo del mensaje mi carrito de cart carrito
-      Carrito: "#202124"
+      Carrito: "#202124",
+      CartColor: "#FFF"
     },
     error: {
       light: "#E54F5D",

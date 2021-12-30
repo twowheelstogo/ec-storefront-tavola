@@ -11,7 +11,7 @@ const DesignGroupItems = styled.div``;
 
 const styles = (theme) => ({
     incrementButton: {
-        background: theme.palette.primary.main,
+        background: theme.palette.primary.dark,
         color: theme.palette.primary.light,
         borderRadius: "50%",
         width: "35px",

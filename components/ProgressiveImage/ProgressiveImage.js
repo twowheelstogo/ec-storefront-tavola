@@ -45,10 +45,10 @@ const Img = styled.img`
     if (isLoading) {
       styles += `
         filter: blur(8px);
-        z-index: 1100;`;
+        z-index: 300;`;
     }
     if (isLoaded) {
-      styles += "z-index: 1000;";
+      styles += "z-index: 300;";
     }
     if (isHidden) {
       styles += "opacity: 0;";

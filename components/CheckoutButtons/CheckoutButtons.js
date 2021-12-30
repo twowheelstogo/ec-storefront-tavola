@@ -11,7 +11,7 @@ const Div = styled.div``;
 
 const styles = (theme) => ({
   purchasingProcess:{
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.primary.light,
   
   },
@@ -71,7 +71,6 @@ class CheckoutButtons extends Component {
             className={buyHome}
             variant="contained"
             disableRipple
-
           >
             {secondButtonText}
           </Button>

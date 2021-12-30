@@ -54,6 +54,7 @@ class Layout extends Component {
       shop,
       components: { NavigationHeader },
       components: { CustomFooter },
+      withHero
     } = this.props;
 
 
@@ -76,7 +77,7 @@ class Layout extends Component {
         { Titulo: "Sobre Nosotros", ruta: "/sobre" },
         { Titulo: "Extra", ruta: "/sobre" },
       ],
-      NombreEmpresa: "Pollo Brujo",
+      NombreEmpresa: "La Tavola",
       RedesSociales: [
         { Icono: <InstagramIcon />, ruta: "https://www.instagram.com/latavolabistro/" },
         { Icono: <FacebookIcon />, ruta: "https://www.facebook.com/latavolabistroisn/" },
@@ -98,7 +99,7 @@ class Layout extends Component {
               "https://firebasestorage.googleapis.com/v0/b/twg-vehicle-dashboard.appspot.com/o/Iconos%2FLaTavolaInicio.jpg?alt=media&token=c60c0f5b-3d2b-43a2-a537-4d0565d5f3cd"
             }
             MessageCover={"LA TAVOLA CREATIVE BISTRO"}
-            BanderaSlideHero={true}
+            BanderaSlideHero={withHero}
           />
 
           <main className={classes.main}>

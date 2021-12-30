@@ -32,7 +32,7 @@ import AddressChoice from "@reactioncommerce/components/AddressChoice/v1";
 import AddressForm from "@reactioncommerce/components/AddressForm/v1";
 import AddressReview from "@reactioncommerce/components/AddressReview/v1";
 import BadgeOverlay from "@reactioncommerce/components/BadgeOverlay/v1";
-import Button from "@reactioncommerce/components/Button/v1";
+// import Button from "@reactioncommerce/components/Button/v1";
 // import CartItem from "@reactioncommerce/components/CartItem/v1";
 // import CartItemDetail from "@reactioncommerce/components/CartItemDetail/v1";
 import CartItems from "@reactioncommerce/components/CartItems/v1";
@@ -81,6 +81,7 @@ import SlideHero from "components/SlideHero";
 import CustomFooter from "components/CustomFooter";
 import NavigationHeader from "components/NavigationHeader";
 import CartEmptyMessage from "components/CartEmptyMessage";
+import Button from "components/Button";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
