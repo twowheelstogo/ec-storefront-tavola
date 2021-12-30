@@ -1,11 +1,12 @@
 import React, { useState, Fragment, useEffect } from "react";
 import inject from "hocs/inject";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import AccountIcon from "mdi-material-ui/Account";
+import { AccountCircleOutline } from "mdi-material-ui";
+//import AccountIcon from "mdi-material-ui/Account";
 import Popover from "@material-ui/core/Popover";
 import useViewer from "hooks/viewer/useViewer";
 import ViewerInfo from "@reactioncommerce/components/ViewerInfo/v1";
@@ -15,16 +16,30 @@ import EntryModal from "../Entry/EntryModal";
 import getAccountsHandler from "../../lib/accountsServer.js";
 
 const useStyles = makeStyles((theme) => ({
+  ColoresPrincipales: {
+    color: theme.palette.colors.TextTheme,
+  },
   accountDropdown: {
     width: 320,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   marginBottom: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
+  Usuario: {
+    color: theme.palette.colors.buttonBorderColor,
+    ["@media (min-width:600px)"]: {
+      width: "35px",
+      height: "35px",
+    },
+    ["@media (max-width:599px)"]: {
+      width: "25px",
+      height: "25px",
+    },
+  },
 }));
 
-const AccountDropdown = () => {
+const AccountDropdown = (props) => {
   const router = useRouter();
   const { uiStore } = useStores();
   const { setEntryModal } = uiStore;
@@ -56,7 +71,7 @@ const AccountDropdown = () => {
   const toggleOpen = (event) => {
     setAnchorElement(event.currentTarget);
   };
-
+  
   return (
     <Fragment>
       <EntryModal onClose={onClose} resetToken={resetToken} />
@@ -66,7 +81,7 @@ const AccountDropdown = () => {
         </ButtonBase>
       ) : (
         <IconButton color="inherit" onClick={toggleOpen}>
-          <AccountIcon />
+          <AccountCircleOutline className={classes.Usuario}/>
         </IconButton>
       )}
 
@@ -74,7 +89,7 @@ const AccountDropdown = () => {
         anchorEl={anchorElement}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center"
+          horizontal: "center",
         }}
         open={Boolean(anchorElement)}
         onClose={onClose}
@@ -85,28 +100,28 @@ const AccountDropdown = () => {
               <div className={classes.marginBottom}>
                 <Link href="/profile/address">
                   <Button color="primary" fullWidth>
-                    Profile
+                    Perfil
                   </Button>
                 </Link>
               </div>
               <div className={classes.marginBottom}>
                 <Button color="primary" fullWidth onClick={() => setEntryModal("change-password")}>
-                  Change Password
+                  Cambiar Contraseña
                 </Button>
               </div>
               <Button color="primary" fullWidth onClick={handleSignOut} variant="contained">
-                Sign Out
+                Cerrar Sesión
               </Button>
             </Fragment>
           ) : (
             <Fragment>
               <div className={classes.authContent}>
-                <Button color="primary" fullWidth variant="contained" onClick={() => setEntryModal("login")}>
-                  Sign In
+                <Button color="primary" fullWidth onClick={() => setEntryModal("login")}>
+                  Iniciar Sesión
                 </Button>
               </div>
               <Button color="primary" fullWidth onClick={() => setEntryModal("signup")}>
-                Create Account
+                Crear Cuenta
               </Button>
             </Fragment>
           )}

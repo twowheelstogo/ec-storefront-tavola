@@ -74,6 +74,13 @@ import CartItemsList from "components/CartItemsList";
 import QuantityInput from "components/QuantityInput";
 import Price from "components/Price";
 import CartItemDetail from "components/CartItemDetail";
+import MiniCartComponent from "components/MiniCartComponent";
+import IconsActions from "components/IconsActions";
+import SearchBar from "components/SearchBar";
+import SlideHero from "components/SlideHero";
+import CustomFooter from "components/CustomFooter";
+import NavigationHeader from "components/NavigationHeader";
+import CartEmptyMessage from "components/CartEmptyMessage";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -134,5 +141,12 @@ export default {
   HorizontalTagsProducts,
   CartItem,
   CartItemsList,
-  CartSummary
+  CartSummary,
+  MiniCartComponent,
+  NavigationHeader,
+  IconsActions,
+  SearchBar,
+  SlideHero,
+  CustomFooter,
+  CartEmptyMessage
 };
