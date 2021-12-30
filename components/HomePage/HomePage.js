@@ -40,7 +40,7 @@ HomePage.propTypes = {
     isLoadingCatalogItems: PropTypes.bool,
     tags: PropTypes.array,
     addItemsToCart: PropTypes.func.isRequired,
-    onChangeCartItemsQuantity: PropTypes.func.isRequired
+    // onChangeCartItemsQuantity: PropTypes.func.isRequired
 };
 
 export default withComponents(HomePage);
