@@ -64,6 +64,7 @@ const Cart = styled.div`
 
 const Items = styled.div`
   max-height: ${applyTheme("MiniCart.listHeightToBeginScrolling")};
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   padding-bottom: ${applyTheme("MiniCart.listPaddingBottom")};

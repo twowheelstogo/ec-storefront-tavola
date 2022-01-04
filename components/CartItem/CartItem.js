@@ -7,7 +7,6 @@ import { CustomPropTypes } from "@reactioncommerce/components/utils";
 const Item = styled.div`
 display: table;
 width: 100%;
-padding-left: 20px;
 `;
 
 const ItemContent = styled.div`
@@ -38,7 +37,6 @@ position: relative;
 text-align: right;
 padding-bottom: 20px;
 padding-top:20px;
-padding-left: 150px;
 `;
 
 const ItemContentSubtotal = styled.div`
@@ -46,7 +44,9 @@ font-size: 14px;
 font-weight: 700;
 }`;
 
-const ItemContentSubtotalTitle = styled.div``;
+const ItemContentSubtotalTitle = styled.div`
+padding-left:100px
+`;
 
 
 class CartItem extends Component {

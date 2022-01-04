@@ -20,7 +20,6 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(2),
   },
   listItemRoot: {
-    paddingTop: 16,
     paddingBottom: 16,
   },
   listItemDense: {

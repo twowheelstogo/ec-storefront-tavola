@@ -3,7 +3,7 @@ import React, { Fragment, Component } from "react";
 import PropTypes from "prop-types";
 import { isEqual } from "lodash";
 import styled from "styled-components";
-import Actions from "@reactioncommerce/components/CheckoutActions/v1";
+import Actions from "components/Actions";
 import ShippingAddressCheckoutAction from "@reactioncommerce/components/ShippingAddressCheckoutAction/v1";
 import FulfillmentOptionsCheckoutAction from "@reactioncommerce/components/FulfillmentOptionsCheckoutAction/v1";
 import PaymentsCheckoutAction from "@reactioncommerce/components/PaymentsCheckoutAction/v1";
@@ -15,6 +15,8 @@ import PageLoading from "components/PageLoading";
 import Router from "translations/i18nRouter";
 import calculateRemainderDue from "lib/utils/calculateRemainderDue";
 import { placeOrderMutation } from "../../hooks/orders/placeOrder.gql";
+import FulfillmentTypeAction from "components/FulfillmentTypeAction";
+import deliveryMethods from "custom/deliveryMethods";
 
 const MessageDiv = styled.div`
   ${addTypographyStyles("NoPaymentMethodsMessage", "bodyText")}
@@ -57,7 +59,6 @@ class CheckoutActions extends Component {
     hasPaymentError: false,
     isPlacingOrder: false
   };
-
   componentDidUpdate({ addressValidationResults: prevAddressValidationResults }) {
     const { addressValidationResults } = this.props;
     if (
@@ -68,6 +69,60 @@ class CheckoutActions extends Component {
       this.handleValidationErrors();
     }
   }
+
+  // setShippingMethod = async (shippingMethod) => {
+	// 	const { checkoutMutations: { onSetFulfillmentOption } } = this.props;
+	// 	const { checkout: { fulfillmentGroups } } = this.props.cart;
+	// 	const fulfillmentOption = {
+	// 		fulfillmentGroupId: fulfillmentGroups[0]._id,
+	// 		fulfillmentMethodId: shippingMethod.selectedFulfillmentOption.fulfillmentMethod._id
+	// 	};
+
+	// 	await onSetFulfillmentOption(fulfillmentOption);
+	// };
+
+
+  setFulfillmentType = async (type) => {
+    console.log('type');
+		const { checkoutMutations: { onSetFulfillmentType } } = this.props;
+		const { checkout: { fulfillmentGroups } } = this.props.cart;
+    console.log(fulfillmentTypeInput);
+    console.log(onSetFulfillmentType);
+		const fulfillmentTypeInput = {
+			fulfillmentGroupId: fulfillmentGroups[0]._id,
+			fulfillmentType: type
+		};
+		await onSetFulfillmentType(fulfillmentTypeInput);
+	};
+
+  setShippingAddress = async (address) => {
+		const { checkoutMutations: { onSetShippingAddress } } = this.props;
+		delete address.isValid;
+		const { data, error } = await onSetShippingAddress(address);
+
+		if (data && !error && this._isMounted) {
+			this.setState({
+				actionAlerts: {
+					1: {}
+				}
+			});
+		}
+	};
+
+  setPickupDetails = async (details) => {
+		const { checkoutMutations: { onSetPickupDetails } } = this.props;
+
+		const { data, error } = await onSetPickupDetails(details);
+
+		if (data && !error && this._isMounted) {
+			this.setState({
+				actionAlerts: {
+					1: {}
+				}
+			});
+		}
+	};
+
 
   componentDidMount() {
     this._isMounted = true;
@@ -95,19 +150,6 @@ class CheckoutActions extends Component {
     return firstPayment ? firstPayment.payment.method : null;
   }
 
-  setShippingAddress = async (address) => {
-    const { checkoutMutations: { onSetShippingAddress } } = this.props;
-    delete address.isValid;
-    const { data, error } = await onSetShippingAddress(address);
-
-    if (data && !error && this._isMounted) {
-      this.setState({
-        actionAlerts: {
-          1: {}
-        }
-      });
-    }
-  };
 
   handleValidationErrors() {
     const { addressValidationResults } = this.props;
@@ -280,71 +322,80 @@ class CheckoutActions extends Component {
 
     let PaymentComponent = PaymentsCheckoutAction;
     if (!Array.isArray(paymentMethods) || paymentMethods.length === 0) {
+      console.log("empty payment methods");
       PaymentComponent = NoPaymentMethodsMessage;
     }
 
     const actions = [
       {
-        id: "1",
-        activeLabel: "Enter a shipping address",
-        completeLabel: "Shipping address",
-        incompleteLabel: "Shipping address",
-        status: fulfillmentGroup.type !== "shipping" || fulfillmentGroup.shippingAddress ? "complete" : "incomplete",
-        component: ShippingAddressCheckoutAction,
-        onSubmit: this.setShippingAddress,
-        props: {
-          addressValidationResults,
-          alert: actionAlerts["1"],
-          fulfillmentGroup,
-          onAddressValidation: addressValidation
-        }
-      },
-      {
-        id: "2",
-        activeLabel: "Choose a shipping method",
-        completeLabel: "Shipping method",
-        incompleteLabel: "Shipping method",
-        status: fulfillmentGroup.selectedFulfillmentOption ? "complete" : "incomplete",
-        component: FulfillmentOptionsCheckoutAction,
-        onSubmit: this.setShippingMethod,
-        props: {
-          alert: actionAlerts["2"],
-          fulfillmentGroup
-        }
-      },
-      {
-        id: "3",
-        activeLabel: "Enter payment information",
-        completeLabel: "Payment information",
-        incompleteLabel: "Payment information",
-        status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
-        component: PaymentComponent,
-        onSubmit: this.handlePaymentSubmit,
-        props: {
-          addresses,
-          alert: actionAlerts["3"],
-          onReset: this.handlePaymentsReset,
-          payments,
-          paymentMethods,
-          remainingAmountDue
-        }
-      },
-      {
-        id: "4",
-        activeLabel: "Review and place order",
-        completeLabel: "Review and place order",
-        incompleteLabel: "Review and place order",
-        status: "incomplete",
-        component: FinalReviewCheckoutAction,
-        onSubmit: this.buildOrder,
-        props: {
-          alert: actionAlerts["4"],
-          checkoutSummary,
-          productURLPath: "/api/detectLanguage/product/"
-        }
-      }
+				id: "1",
+				activeLabel: "Elige un método de entrega",
+				completeLabel: "Método de entrega",
+				incompleteLabel: "Método de entrega",
+				status: fulfillmentGroup.type !== "shipping" || fulfillmentGroup.shippingAddress ? "complete" : "incomplete",
+				component: FulfillmentTypeAction,
+				onSubmit: this.setShippingAddress,
+				props: {
+					alert: actionAlerts["1"],
+					deliveryMethods,
+					fulfillmentGroup,
+					actionAlerts: {
+						"2": actionAlerts["2"],
+						"3": actionAlerts["3"],
+					},
+					submits: {
+						onSubmitShippingAddress: this.setShippingAddress,
+						// onSetShippingMethod: this.setShippingMethod,
+						onSelectFulfillmentType: this.setFulfillmentType,
+						onSubmitPickupDetails: this.setPickupDetails
+					}
+				}
+			}
+      // {
+      //   id: "2",
+      //   activeLabel: "Choose a shipping method",
+      //   completeLabel: "Shipping method",
+      //   incompleteLabel: "Shipping method",
+      //   status: fulfillmentGroup.selectedFulfillmentOption ? "complete" : "incomplete",
+      //   component: FulfillmentOptionsCheckoutAction,
+      //   onSubmit: this.setShippingMethod,
+      //   props: {
+      //     alert: actionAlerts["2"],
+      //     fulfillmentGroup
+      //   }
+      // },
+      // {
+      //   id: "3",
+      //   activeLabel: "Enter payment information",
+      //   completeLabel: "Payment information",
+      //   incompleteLabel: "Payment information",
+      //   status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
+      //   component: PaymentComponent,
+      //   onSubmit: this.handlePaymentSubmit,
+      //   props: {
+      //     addresses,
+      //     alert: actionAlerts["3"],
+      //     onReset: this.handlePaymentsReset,
+      //     payments,
+      //     paymentMethods,
+      //     remainingAmountDue
+      //   }
+      // },
+      // {
+      //   id: "4",
+      //   activeLabel: "Review and place order",
+      //   completeLabel: "Review and place order",
+      //   incompleteLabel: "Review and place order",
+      //   status: "incomplete",
+      //   component: FinalReviewCheckoutAction,
+      //   onSubmit: this.buildOrder,
+      //   props: {
+      //     alert: actionAlerts["4"],
+      //     checkoutSummary,
+      //     productURLPath: "/api/detectLanguage/product/"
+      //   }
+      // }
     ];
-
     return (
       <Fragment>
         {this.renderPlacingOrderOverlay()}

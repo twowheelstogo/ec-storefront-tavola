@@ -38,7 +38,7 @@ const theme = createMuiTheme({
       Modal: "#1D0D13",
       //Fondo del mensaje mi carrito de cart carrito
       Carrito: "#202124",
-      CartColor: "#FFF"
+      CartColor: "#FFF",
     },
     error: {
       light: "#E54F5D",
@@ -52,7 +52,7 @@ const theme = createMuiTheme({
     },
     colors: {
       buttonBorderColor: "#EA6D23",
-
+      CartSummary:'#F9F9F9',
       //color principal de la letra
       TextTheme: "#1D0D13",
       SearchColor: "#dcdcdc",

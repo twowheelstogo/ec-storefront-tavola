@@ -34,9 +34,10 @@ const styles = (theme) => ({
     fontWeight: theme.typography.fontWeightBold
   },
   title: {
-    fontWeight: theme.typography.fontWeightRegular,
+    fontWeight: 700,
     marginTop: "1.6rem",
-    marginBottom: "3.1rem"
+    marginBottom: "3.1rem",
+    fontSize: "36px",
   },
   itemWrapper: {
     borderTop: theme.palette.borders.default,
@@ -91,8 +92,8 @@ class CartPage extends Component {
 
     if (cart && Array.isArray(cart.items) && cart.items.length) {
       return (
-        <Grid item xs={12} md={8}>
-          {/* <div className={classes.itemWrapper}> */}
+          <Grid item xs={12} md={8} style={{padding:'12px'}}>
+            {/* <div className={classes.itemWrapper}> */}
             <CartItems
               hasMoreCartItems={hasMoreCartItems}
               onLoadMoreCartItems={loadMoreCartItems}
@@ -100,8 +101,8 @@ class CartPage extends Component {
               onChangeCartItemQuantity={this.handleItemQuantityChange}
               onRemoveItemFromCart={this.handleRemoveItem}
             />
-          {/* </div> */}
-        </Grid>
+            {/* </div> */}
+          </Grid>
       );
     }
 
@@ -136,7 +137,7 @@ class CartPage extends Component {
             itemsQuantity={cart.totalItemQuantity}
           />
           <div className={classes.checkoutButtonsContainer}>
-            <CheckoutButtons/>
+            <CheckoutButtons />
           </div>
         </Grid>
       );
@@ -157,7 +158,7 @@ class CartPage extends Component {
           title={`Cart | ${shop && shop.name}`}
           meta={[{ name: "description", content: shop && shop.description }]}
         />
-        
+
         {/* <Grid container>
           <Grid item xs = {12} md = {6}>
             <CartItem/>
@@ -170,7 +171,7 @@ class CartPage extends Component {
           <Typography className={classes.title} variant="h6" align="center">
             Mi Carrito
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container>
             {this.renderCartItems()}
             {this.renderCartSummary()}
             {/* <Grid className={classes.customerSupportCopy} item>

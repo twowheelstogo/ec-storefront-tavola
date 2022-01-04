@@ -40,7 +40,9 @@ import CartItems from "@reactioncommerce/components/CartItems/v1";
 import CatalogGrid from "@reactioncommerce/components/CatalogGrid/v1";
 import CatalogGridItem from "components/CatalogGridItem";
 import Checkbox from "@reactioncommerce/components/Checkbox/v1";
-import CheckoutAction from "@reactioncommerce/components/CheckoutAction/v1";
+import CheckoutAction from "components/CheckoutAction";
+import CardItems from "components/CardItems";
+import CardItemSelect from "components/CardItemSelect";
 import CheckoutActionComplete from "@reactioncommerce/components/CheckoutActionComplete/v1";
 import CheckoutActionIncomplete from "@reactioncommerce/components/CheckoutActionIncomplete/v1";
 import ErrorsBlock from "@reactioncommerce/components/ErrorsBlock/v1";
@@ -149,5 +151,7 @@ export default {
   SearchBar,
   SlideHero,
   CustomFooter,
-  CartEmptyMessage
+  CartEmptyMessage,
+  CardItems,
+  CardItemSelect
 };
