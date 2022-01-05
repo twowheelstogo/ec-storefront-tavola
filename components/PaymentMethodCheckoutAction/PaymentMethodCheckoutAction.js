@@ -33,9 +33,9 @@ class PaymentMethodCheckoutAction extends Component{
     componentDidMount(){
     	const {onChange} = this.props;
     	const {billingAddress,selectedPaymentMethodName} = this.state;
-    	onChange({
-    		billingAddress,selectedPaymentMethodName
-    	});
+    	// onChange({
+    	// 	billingAddress,selectedPaymentMethodName
+    	// });
     }
     setSelectedPaymentMethodName = (method) => {
     	const {onReset} = this.props;

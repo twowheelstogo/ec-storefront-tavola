@@ -17,6 +17,7 @@ import calculateRemainderDue from "lib/utils/calculateRemainderDue";
 import { placeOrderMutation } from "../../hooks/orders/placeOrder.gql";
 import FulfillmentTypeAction from "components/FulfillmentTypeAction";
 import deliveryMethods from "custom/deliveryMethods";
+import PaymentMethodCheckoutAction from "components/PaymentMethodCheckoutAction";
 
 const MessageDiv = styled.div`
   ${addTypographyStyles("NoPaymentMethodsMessage", "bodyText")}
@@ -80,7 +81,34 @@ class CheckoutActions extends Component {
 
 	// 	await onSetFulfillmentOption(fulfillmentOption);
 	// };
-
+	handleInputComponentSubmit = async () => {
+		const { paymentInputs: { data, displayName, billingAddress, selectedPaymentMethodName, amount = null } } = this.state;
+		const { paymentMethods, remainingAmountDue } = this.props;
+    console.log(paymentMethods)
+		let addresses = this.getAddresses;
+		let bAddress = billingAddress || addresses && addresses[0] ? addresses[0] : null;
+		const selectedPaymentMethod = paymentMethods.find((method) => method.name === selectedPaymentMethodName);
+		let cappedPaymentAmount = amount;
+		if (cappedPaymentAmount && typeof remainingAmountDue === "number") {
+			cappedPaymentAmount = Math.min(cappedPaymentAmount, remainingAmountDue);
+		}
+		Object.keys(data).forEach((key) => {
+			if (data[key] == null) throw new CheckoutError({
+				actionCode: 4,
+				title: "Error de pago",
+				message: "Asegúrate de haber llenado todos los campos de pago"
+			});
+		});
+		this.handlePaymentSubmit({
+			displayName: displayName,
+			payment: {
+				amount: cappedPaymentAmount,
+				billingAddress: bAddress,
+				data,
+				method: selectedPaymentMethodName
+			},
+		});
+	}
 
   setFulfillmentType = async (type) => {
     console.log('type');
@@ -109,6 +137,66 @@ class CheckoutActions extends Component {
 		}
 	};
 
+	placeOrder = async (order) => {
+		const { cartStore, clearAuthenticatedUsersCart, apolloClient } = this.props;
+
+		// Payments can have `null` amount to mean "remaining".
+		let remainingAmountDue = order.fulfillmentGroups.reduce((sum, group) => sum + group.totalPrice, 0);
+		const payments = cartStore.checkoutPayments.map(({ payment }) => {
+			const amount = payment.amount ? Math.min(payment.amount, remainingAmountDue) : remainingAmountDue;
+			remainingAmountDue -= amount;
+			return { ...payment, amount };
+		});
+		const billing = cartStore.checkoutBilling;
+		const giftNote = cartStore.checkoutGift;
+		try {
+			let data = null;
+			await this.mutex.runExclusive(async function () {
+				const resApolloClient = await apolloClient.mutate({
+					mutation: placeOrderMutation,
+					variables: {
+						input: {
+							order,
+							payments,
+							billing,
+							giftNote
+						}
+					}
+				});
+				data = resApolloClient.data;
+			});
+
+			// Placing the order was successful, so we should clear the
+			// anonymous cart credentials from cookie since it will be
+			// deleted on the server.
+			cartStore.clearAnonymousCartCredentials();
+			clearAuthenticatedUsersCart();
+
+			// Also destroy the collected and cached payment input
+			cartStore.resetCheckoutPayments();
+
+			const { placeOrder: { orders, token } } = data;
+			// Send user to order confirmation page
+			Router.push(`/checkout/order?orderId=${orders[0].referenceId}${token ? `&token=${token}` : ""}`);
+		} catch (error) {
+			if (this._isMounted) {
+				this.handlePaymentsReset();
+				this.setState({
+					hasPaymentError: true,
+					isPlacingOrder: false,
+					actionAlerts: {
+						4: {
+							alertType: "error",
+							title: "Payment method failed",
+							message: error.toString().replace("Error: GraphQL error:", "")
+						}
+					}
+				});
+			}
+		}
+	};
+
+  
   setPickupDetails = async (details) => {
 		const { checkoutMutations: { onSetPickupDetails } } = this.props;
 
@@ -162,6 +250,16 @@ class CheckoutActions extends Component {
       } : null;
     this.setState({ actionAlerts: { 1: shippingAlert } });
   }
+	get shippingMethod() {
+		const { checkout: { fulfillmentGroups } } = this.props.cart;
+		const { selectedFulfillmentOption } = fulfillmentGroups[0];
+		return selectedFulfillmentOption ? selectedFulfillmentOption.fulfillmentMethod.displayName : null;
+	}
+
+	get paymentMethod() {
+		const [firstPayment] = this.props.cartStore.checkoutPayments;
+		return firstPayment ? firstPayment.payment.method : null;
+	}
 
   setShippingMethod = async (shippingMethod) => {
     const { checkoutMutations: { onSetFulfillmentOption } } = this.props;
@@ -288,6 +386,18 @@ class CheckoutActions extends Component {
     );
   };
 
+  get getAddresses() {
+		const {
+			cart
+		} = this.props;
+		const { checkout: { fulfillmentGroups, summary }, items } = cart;
+		const addresses = fulfillmentGroups.reduce((list, group) => {
+			if (group.shippingAddress) list.push(group.shippingAddress);
+			return list;
+		}, []);
+		return addresses;
+	}
+
   render() {
     const {
       addressValidation,
@@ -350,20 +460,25 @@ class CheckoutActions extends Component {
 						onSubmitPickupDetails: this.setPickupDetails
 					}
 				}
-			}
-      // {
-      //   id: "2",
-      //   activeLabel: "Choose a shipping method",
-      //   completeLabel: "Shipping method",
-      //   incompleteLabel: "Shipping method",
-      //   status: fulfillmentGroup.selectedFulfillmentOption ? "complete" : "incomplete",
-      //   component: FulfillmentOptionsCheckoutAction,
-      //   onSubmit: this.setShippingMethod,
-      //   props: {
-      //     alert: actionAlerts["2"],
-      //     fulfillmentGroup
-      //   }
-      // },
+			},
+      {
+				id: "4",
+				activeLabel: "Elige cómo pagarás tu orden",
+				completeLabel: "payment method",
+				incompleteLabel: "payment method",
+				status: fulfillmentGroup.selectedFulfillmentOption ? "complete" : "incomplete",
+				component: PaymentMethodCheckoutAction,
+				onSubmit: this.handlePaymentSubmit,
+				props: {
+					addresses,
+					alert: actionAlerts["4"],
+					onReset: this.handlePaymentsReset,
+					payments,
+					paymentMethods,
+					remainingAmountDue,
+					onChange: this.setPaymentInputs,
+				}
+			},
       // {
       //   id: "3",
       //   activeLabel: "Enter payment information",
