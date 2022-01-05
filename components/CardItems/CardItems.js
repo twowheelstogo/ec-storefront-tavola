@@ -5,7 +5,7 @@ import { CustomPropTypes } from "@reactioncommerce/components/utils";
 import { withComponents } from "@reactioncommerce/components-context";
 const Items = styled.div`
     display: grid;
-    overflow-x: scroll;
+    overflow-x: hidden;
     gap: 15px;
     grid-auto-flow: column;
     justify-content: flex-start;
@@ -29,7 +29,9 @@ class CardItemList extends Component {
                     <CardItemSelect
                         method={item}
                         onSelect={onSelect}
-                        selected={item.name == itemSelected.name} />)}
+                        selected={item.name == itemSelected.name} 
+                    />
+                )}
             </Items>
         );
     }

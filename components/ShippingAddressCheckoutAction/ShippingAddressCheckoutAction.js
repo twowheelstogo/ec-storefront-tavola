@@ -51,7 +51,7 @@ class ShippingAddressCheckoutAction extends React.Component {
 
 		return (
 			<React.Fragment>
-				{/* {this.renderAddressList()} */}
+				{this.renderAddressList()}
 				<SecureCaption>
 					{shippingAddress && (<Span>{"Tu orden llegará a más tardar a las " + estimatedTime}</Span>)}
 				</SecureCaption>

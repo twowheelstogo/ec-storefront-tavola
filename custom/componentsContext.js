@@ -84,6 +84,8 @@ import CustomFooter from "components/CustomFooter";
 import NavigationHeader from "components/NavigationHeader";
 import CartEmptyMessage from "components/CartEmptyMessage";
 import Button from "components/Button";
+import AddressList from "components/AddressList";
+import RadioButtonItem from "components/RadioButtonItem";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -144,6 +146,8 @@ export default {
   HorizontalTagsProducts,
   CartItem,
   CartItemsList,
+  AddressList,
+  RadioButtonItem,
   CartSummary,
   MiniCartComponent,
   NavigationHeader,
