@@ -100,17 +100,36 @@ class AddressList extends Component {
     	window.location.href = `${origin}/en/address?redirect=${encodeURIComponent(href)}`;
     }
     render() {
+        const _id = 22323134145;
+        const description = "CASA" 
+        const address = "24 calle 41-54 zona 5"
+        const reference = "casa"
+        const geolocation = {
+            latitude: 14.628162979472757, 
+            longitude: -90.50167583763323,
+        }
+        const metaddress = {
+            administrative_area_level_1: "String",
+            administrative_area_level_2: "String",
+            neighborhood: "String",
+            street_address: "String",
+            sublocality: "String",
+            distance: {
+				value: 23.32,
+				text: "hola"
+			},
+        }
     	const { account: { addressBook }, components: { RadioButtonItem }, onAddressDeleted, onSelect, currentAddress } = this.props;
     	return (
     		<Items>
-    			{addressBook.map(({
+    			{/* {addressBook.map(({
     				_id,
     				description,
     				address,
     				reference,
     				geolocation,
 					metaddress
-    			}) => (
+    			}) => ( */}
     				<RadioButtonItem
     					title={description}
     					description={metaddress ? `${address} - ${metaddress.distance.text}` : address}
@@ -135,7 +154,7 @@ class AddressList extends Component {
     						handleClose: this.handleClose
     					}}
     				/>
-    			))}
+    			{/* ))} */}
     			<CustomRoundedButton onClick={this.createAddress}>
     				<CustomButtonText>{addressBook.length>0?"Agregar otra dirección":"Agregar una dirección"}</CustomButtonText>
     				<AddIcon />
