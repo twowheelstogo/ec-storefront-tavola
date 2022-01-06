@@ -18,6 +18,7 @@ import { placeOrderMutation } from "../../hooks/orders/placeOrder.gql";
 import FulfillmentTypeAction from "components/FulfillmentTypeAction";
 import deliveryMethods from "custom/deliveryMethods";
 import PaymentMethodCheckoutAction from "components/PaymentMethodCheckoutAction";
+import BillingCheckoutAction from "components/BillingCheckoutAction";
 
 const MessageDiv = styled.div`
   ${addTypographyStyles("NoPaymentMethodsMessage", "bodyText")}
@@ -41,6 +42,9 @@ class CheckoutActions extends Component {
       items: PropTypes.array
     }).isRequired,
     cartStore: PropTypes.object,
+    authStore: PropTypes.shape({
+			account: PropTypes.object.isRequired
+		}),
     checkoutMutations: PropTypes.shape({
       onSetFulfillmentOption: PropTypes.func.isRequired,
       onSetShippingAddress: PropTypes.func.isRequired
@@ -58,8 +62,37 @@ class CheckoutActions extends Component {
       4: null
     },
     hasPaymentError: false,
-    isPlacingOrder: false
+    isPlacingOrder: false,    
+    invoiceInputs: {
+			partnerId: -1,
+			isCf: true,
+			nit: "0",
+			name: "CF",
+			address: "",
+			country: "",
+			depto: "",
+			city: ""
+		},
+    paymentInputs: {},
   };
+
+  setPaymentInputs = (inputs) => {
+		this.setState(prev => ({
+			paymentInputs: {
+				...prev.paymentInputs,
+				...inputs
+			}
+		}));
+	}
+  setInvoiceInputs = (inputs) => {
+		this.setState(prev => ({
+			invoiceInputs: {
+				...prev.invoiceInputs,
+				...inputs
+			}
+		}));
+	}
+
   componentDidUpdate({ addressValidationResults: prevAddressValidationResults }) {
     const { addressValidationResults } = this.props;
     if (
@@ -81,34 +114,7 @@ class CheckoutActions extends Component {
 
 	// 	await onSetFulfillmentOption(fulfillmentOption);
 	// };
-	handleInputComponentSubmit = async () => {
-		const { paymentInputs: { data, displayName, billingAddress, selectedPaymentMethodName, amount = null } } = this.state;
-		const { paymentMethods, remainingAmountDue } = this.props;
-    console.log(paymentMethods)
-		let addresses = this.getAddresses;
-		let bAddress = billingAddress || addresses && addresses[0] ? addresses[0] : null;
-		const selectedPaymentMethod = paymentMethods.find((method) => method.name === selectedPaymentMethodName);
-		let cappedPaymentAmount = amount;
-		if (cappedPaymentAmount && typeof remainingAmountDue === "number") {
-			cappedPaymentAmount = Math.min(cappedPaymentAmount, remainingAmountDue);
-		}
-		Object.keys(data).forEach((key) => {
-			if (data[key] == null) throw new CheckoutError({
-				actionCode: 4,
-				title: "Error de pago",
-				message: "Asegúrate de haber llenado todos los campos de pago"
-			});
-		});
-		this.handlePaymentSubmit({
-			displayName: displayName,
-			payment: {
-				amount: cappedPaymentAmount,
-				billingAddress: bAddress,
-				data,
-				method: selectedPaymentMethodName
-			},
-		});
-	}
+
 
   setFulfillmentType = async (type) => {
     console.log('type');
@@ -137,66 +143,6 @@ class CheckoutActions extends Component {
 		}
 	};
 
-	placeOrder = async (order) => {
-		const { cartStore, clearAuthenticatedUsersCart, apolloClient } = this.props;
-
-		// Payments can have `null` amount to mean "remaining".
-		let remainingAmountDue = order.fulfillmentGroups.reduce((sum, group) => sum + group.totalPrice, 0);
-		const payments = cartStore.checkoutPayments.map(({ payment }) => {
-			const amount = payment.amount ? Math.min(payment.amount, remainingAmountDue) : remainingAmountDue;
-			remainingAmountDue -= amount;
-			return { ...payment, amount };
-		});
-		const billing = cartStore.checkoutBilling;
-		const giftNote = cartStore.checkoutGift;
-		try {
-			let data = null;
-			await this.mutex.runExclusive(async function () {
-				const resApolloClient = await apolloClient.mutate({
-					mutation: placeOrderMutation,
-					variables: {
-						input: {
-							order,
-							payments,
-							billing,
-							giftNote
-						}
-					}
-				});
-				data = resApolloClient.data;
-			});
-
-			// Placing the order was successful, so we should clear the
-			// anonymous cart credentials from cookie since it will be
-			// deleted on the server.
-			cartStore.clearAnonymousCartCredentials();
-			clearAuthenticatedUsersCart();
-
-			// Also destroy the collected and cached payment input
-			cartStore.resetCheckoutPayments();
-
-			const { placeOrder: { orders, token } } = data;
-			// Send user to order confirmation page
-			Router.push(`/checkout/order?orderId=${orders[0].referenceId}${token ? `&token=${token}` : ""}`);
-		} catch (error) {
-			if (this._isMounted) {
-				this.handlePaymentsReset();
-				this.setState({
-					hasPaymentError: true,
-					isPlacingOrder: false,
-					actionAlerts: {
-						4: {
-							alertType: "error",
-							title: "Payment method failed",
-							message: error.toString().replace("Error: GraphQL error:", "")
-						}
-					}
-				});
-			}
-		}
-	};
-
-  
   setPickupDetails = async (details) => {
 		const { checkoutMutations: { onSetPickupDetails } } = this.props;
 
@@ -213,11 +159,12 @@ class CheckoutActions extends Component {
 
 
   componentDidMount() {
-    this._isMounted = true;
+    this._isMounted = true;    
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = false;    
+      console.log(this.props.cart.checkout.summary.total.displayAmount);    
   }
 
   buildData = ({ step, action }) => ({
@@ -238,6 +185,38 @@ class CheckoutActions extends Component {
     return firstPayment ? firstPayment.payment.method : null;
   }
 
+  handleInputBillingComponentSubmit = async () => {
+		const { invoiceInputs } = this.state;
+		const cloneInvoice = Object.assign({}, invoiceInputs);
+		if (!invoiceInputs.isCf) {
+			cloneInvoice.name = (cloneInvoice.name) ? cloneInvoice.name.trim() : "";
+			cloneInvoice.name = formatName(cloneInvoice.name);
+			cloneInvoice.nit = (cloneInvoice.nit) ? cloneInvoice.nit.trim() : "";
+			cloneInvoice.address = (cloneInvoice.address) ? cloneInvoice.address.trim() : "";
+			cloneInvoice.address = formatName(cloneInvoice.address);
+			cloneInvoice.depto = (cloneInvoice.depto) ? cloneInvoice.depto.trim() : "";
+			cloneInvoice.depto = formatName(cloneInvoice.depto);
+			cloneInvoice.city = (cloneInvoice.city) ? cloneInvoice.city.trim() : "";
+			cloneInvoice.city = formatName(cloneInvoice.city);
+
+			if (cloneInvoice.nit == "") {
+				throw new CheckoutError({
+					actionCode: 5,
+					title: "Error de facturación",
+					message: "Asegúrate de haber llenado el nit a facturar"
+				});
+			}
+			if (cloneInvoice.name == "") {
+				throw new CheckoutError({
+					actionCode: 5,
+					title: "Error de facturación",
+					message: "Asegúrate de haber llenado el nombre a facturar"
+				});
+			}
+		}
+		this.handleBillingSubmit(cloneInvoice);
+	}
+
 
   handleValidationErrors() {
     const { addressValidationResults } = this.props;
@@ -250,16 +229,6 @@ class CheckoutActions extends Component {
       } : null;
     this.setState({ actionAlerts: { 1: shippingAlert } });
   }
-	get shippingMethod() {
-		const { checkout: { fulfillmentGroups } } = this.props.cart;
-		const { selectedFulfillmentOption } = fulfillmentGroups[0];
-		return selectedFulfillmentOption ? selectedFulfillmentOption.fulfillmentMethod.displayName : null;
-	}
-
-	get paymentMethod() {
-		const [firstPayment] = this.props.cartStore.checkoutPayments;
-		return firstPayment ? firstPayment.payment.method : null;
-	}
 
   setShippingMethod = async (shippingMethod) => {
     const { checkoutMutations: { onSetFulfillmentOption } } = this.props;
@@ -380,23 +349,13 @@ class CheckoutActions extends Component {
     const { isPlacingOrder } = this.state;
 
     return (
-      <Dialog fullScreen disableBackdropClick={true} disableEscapeKeyDown={true} open={isPlacingOrder}>
-        <PageLoading delay={0} message="Placing your order..." />
+      <Dialog fullScreen disableBackdropClick={true} disableEscapeKeyDown={true} open={isPlacingOrder}
+      
+      >
+        <PageLoading delay={0} message="Placing your order..."/>
       </Dialog>
     );
   };
-
-  get getAddresses() {
-		const {
-			cart
-		} = this.props;
-		const { checkout: { fulfillmentGroups, summary }, items } = cart;
-		const addresses = fulfillmentGroups.reduce((list, group) => {
-			if (group.shippingAddress) list.push(group.shippingAddress);
-			return list;
-		}, []);
-		return addresses;
-	}
 
   render() {
     const {
@@ -404,7 +363,8 @@ class CheckoutActions extends Component {
       addressValidationResults,
       cart,
       cartStore,
-      paymentMethods
+      paymentMethods,
+      authStore,
     } = this.props;
 
     const { checkout: { fulfillmentGroups, summary }, items } = cart;
@@ -462,54 +422,43 @@ class CheckoutActions extends Component {
 				}
 			},
       {
-				id: "4",
-				activeLabel: "Elige cómo pagarás tu orden",
-				completeLabel: "payment method",
-				incompleteLabel: "payment method",
-				status: fulfillmentGroup.selectedFulfillmentOption ? "complete" : "incomplete",
-				component: PaymentMethodCheckoutAction,
-				onSubmit: this.handlePaymentSubmit,
-				props: {
-					addresses,
-					alert: actionAlerts["4"],
-					onReset: this.handlePaymentsReset,
-					payments,
-					paymentMethods,
-					remainingAmountDue,
-					onChange: this.setPaymentInputs,
-				}
-			},
+        id: "4",
+        activeLabel: "Elige cómo pagarás tu orden",
+        completeLabel: "Payment information",
+        incompleteLabel: "Payment information",
+        status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
+        component: PaymentMethodCheckoutAction,
+        onSubmit: this.handlePaymentSubmit,
+        props: {
+          addresses,
+          alert: actionAlerts["4"],
+          onReset: this.handlePaymentsReset,
+          payments,
+          paymentMethods,
+          remainingAmountDue,          
+          summary,
+					onChange: this.setPaymentInputs,          
+          //onChange: (value) => console.log(value)
+        }
+      },
       // {
-      //   id: "3",
-      //   activeLabel: "Enter payment information",
-      //   completeLabel: "Payment information",
-      //   incompleteLabel: "Payment information",
-      //   status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
-      //   component: PaymentComponent,
-      //   onSubmit: this.handlePaymentSubmit,
-      //   props: {
-      //     addresses,
-      //     alert: actionAlerts["3"],
-      //     onReset: this.handlePaymentsReset,
-      //     payments,
-      //     paymentMethods,
-      //     remainingAmountDue
-      //   }
-      // },
-      // {
-      //   id: "4",
-      //   activeLabel: "Review and place order",
-      //   completeLabel: "Review and place order",
-      //   incompleteLabel: "Review and place order",
-      //   status: "incomplete",
-      //   component: FinalReviewCheckoutAction,
-      //   onSubmit: this.buildOrder,
-      //   props: {
-      //     alert: actionAlerts["4"],
-      //     checkoutSummary,
-      //     productURLPath: "/api/detectLanguage/product/"
-      //   }
-      // }
+			// 	id: "5",
+			// 	activeLabel: "Datos de facturación",
+			// 	completeLabel: "Datos de facturación",
+			// 	incompleteLabel: "Datos de facturación",
+			// 	status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
+			// 	component: BillingCheckoutAction,
+			// 	onSubmit: this.handleBillingSubmit,
+			// 	props: {
+			// 		alert: actionAlerts["5"],
+			// 		onChange: this.setInvoiceInputs,
+			// 		authStore,
+			// 		isCf: this.state.invoiceInputs.isCf,
+			// 		nitValue: this.state.invoiceInputs.nit,
+			// 		nameValue: this.state.invoiceInputs.name,
+			// 		addressValue: this.state.invoiceInputs.address
+			// 	}
+			// },
     ];
     return (
       <Fragment>
