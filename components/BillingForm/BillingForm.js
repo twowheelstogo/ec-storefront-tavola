@@ -14,15 +14,15 @@ const styles = theme => ({
 		borderRadius: "5px",
 		height: "40px",		
 		padding: "10px",
-		backgroundColor:"#202124",
-		color: "#B8BCCA",
+		backgroundColor:"#F9F9F9",
+		color: "#000",
 		bordeRadius: "4px",		
 	},
 	label_ : {
 		marginTop:"10px"
 	},
 	labelColor: {
-		color: "#fff"
+		color: "#000"
 	},	
 });
 const Grid = styled.div`

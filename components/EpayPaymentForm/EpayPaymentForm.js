@@ -21,8 +21,8 @@ const useStyles = makeStyles(() => ({
 		height: "40px",
 		background: "#F4F1F1",
 		padding: "10px",
-		backgroundColor:"#202124",
-		color: "#B8BCCA",
+		backgroundColor:"#F9F9F9",
+		color: "#000",
 		bordeRadius: "4px",		
 	}
 }));

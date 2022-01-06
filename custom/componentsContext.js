@@ -46,7 +46,7 @@ import CardItemSelect from "components/CardItemSelect";
 import CheckoutActionComplete from "@reactioncommerce/components/CheckoutActionComplete/v1";
 import CheckoutActionIncomplete from "@reactioncommerce/components/CheckoutActionIncomplete/v1";
 import ErrorsBlock from "@reactioncommerce/components/ErrorsBlock/v1";
-import Field from "@reactioncommerce/components/Field/v1";
+// import Field from "@reactioncommerce/components/Field/v1";
 import InPageMenuItem from "@reactioncommerce/components/InPageMenuItem/v1";
 import InlineAlert from "@reactioncommerce/components/InlineAlert/v1";
 import InventoryStatus from "@reactioncommerce/components/InventoryStatus/v1";
@@ -63,7 +63,7 @@ import SelectableItem from "@reactioncommerce/components/SelectableItem/v1";
 import SelectableList from "@reactioncommerce/components/SelectableList/v1";
 import StockWarning from "@reactioncommerce/components/StockWarning/v1";
 import StripeForm from "@reactioncommerce/components/StripeForm/v1";
-import TextInput from "@reactioncommerce/components/TextInput/v1";
+// import TextInput from "@reactioncommerce/components/TextInput/v1";
 // import CartItemsList from "reactioncommerce/components/CartItems/v1";
 import withLocales from "../lib/utils/withLocales";
 //new components for my 
@@ -87,6 +87,8 @@ import Button from "components/Button";
 import AddressList from "components/AddressList";
 import RadioButtonItem from "components/RadioButtonItem";
 import BillingForm from "components/BillingForm";
+import TextInput from "components/TextInput";
+import Field from "components/Field";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
