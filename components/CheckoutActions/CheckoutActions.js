@@ -441,24 +441,24 @@ class CheckoutActions extends Component {
           //onChange: (value) => console.log(value)
         }
       },
-      // {
-			// 	id: "5",
-			// 	activeLabel: "Datos de facturación",
-			// 	completeLabel: "Datos de facturación",
-			// 	incompleteLabel: "Datos de facturación",
-			// 	status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
-			// 	component: BillingCheckoutAction,
-			// 	onSubmit: this.handleBillingSubmit,
-			// 	props: {
-			// 		alert: actionAlerts["5"],
-			// 		onChange: this.setInvoiceInputs,
-			// 		authStore,
-			// 		isCf: this.state.invoiceInputs.isCf,
-			// 		nitValue: this.state.invoiceInputs.nit,
-			// 		nameValue: this.state.invoiceInputs.name,
-			// 		addressValue: this.state.invoiceInputs.address
-			// 	}
-			// },
+      {
+				id: "5",
+				activeLabel: "Datos de facturación",
+				completeLabel: "Datos de facturación",
+				incompleteLabel: "Datos de facturación",
+				status: remainingAmountDue === 0 && !hasPaymentError ? "complete" : "incomplete",
+				component: BillingCheckoutAction,
+				onSubmit: this.handleBillingSubmit,
+				props: {
+					alert: actionAlerts["5"],
+					onChange: this.setInvoiceInputs,
+					authStore,
+					isCf: this.state.invoiceInputs.isCf,
+					nitValue: this.state.invoiceInputs.nit,
+					nameValue: this.state.invoiceInputs.name,
+					addressValue: this.state.invoiceInputs.address
+				}
+			},
     ];
     return (
       <Fragment>

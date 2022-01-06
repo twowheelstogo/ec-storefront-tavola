@@ -86,6 +86,7 @@ import CartEmptyMessage from "components/CartEmptyMessage";
 import Button from "components/Button";
 import AddressList from "components/AddressList";
 import RadioButtonItem from "components/RadioButtonItem";
+import BillingForm from "components/BillingForm";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -157,5 +158,6 @@ export default {
   CustomFooter,
   CartEmptyMessage,
   CardItems,
-  CardItemSelect
+  CardItemSelect,
+  BillingForm
 };
