@@ -85,82 +85,63 @@ class AddressList extends Component {
 			menuOpen: null
 		};
 	}
-    handleOpen = (event) => {
-    	this.setState({
-    		menuOpen: event.currentTarget
-    	});
-    }
-    handleClose = () => {
-    	this.setState({
-    		menuOpen: null
-    	});
-    }
-    createAddress = () => {
-    	let href = window.location.href;
-    	window.location.href = `${origin}/en/address?redirect=${encodeURIComponent(href)}`;
-    }
-    render() {
-        const _id = 22323134145;
-        const description = "CASA" 
-        const address = "24 calle 41-54 zona 5"
-        const reference = "casa"
-        const geolocation = {
-            latitude: 14.628162979472757, 
-            longitude: -90.50167583763323,
-        }
-        const metaddress = {
-            administrative_area_level_1: "String",
-            administrative_area_level_2: "String",
-            neighborhood: "String",
-            street_address: "String",
-            sublocality: "String",
-            distance: {
-				value: 23.32,
-				text: "hola"
-			},
-        }
-    	const { account: { addressBook }, components: { RadioButtonItem }, onAddressDeleted, onSelect, currentAddress } = this.props;
-    	return (
-    		<Items>
-    			{/* {addressBook.map(({
-    				_id,
-    				description,
-    				address,
-    				reference,
-    				geolocation,
+	handleOpen = (event) => {
+		this.setState({
+			menuOpen: event.currentTarget
+		});
+	}
+	handleClose = () => {
+		this.setState({
+			menuOpen: null
+		});
+	}
+	createAddress = () => {
+		let href = window.location.href;
+		window.location.href = `${origin}/en/address?redirect=${encodeURIComponent(href)}`;
+	}
+	render() {
+		const { account: { addressBook }, components: { RadioButtonItem }, onAddressDeleted, onSelect, currentAddress } = this.props;
+		return (
+			<Items>
+				{addressBook.map(({
+					_id,
+					description,
+					address,
+					reference,
+					geolocation,
 					metaddress
-    			}) => ( */}
-    				<RadioButtonItem
-    					title={description}
-    					description={metaddress ? `${address} - ${metaddress.distance.text}` : address}
-    					isSelected={currentAddress && currentAddress._id == _id}
-    					value={{
-    						_id,
-    						description,
-    						address,
-    						reference,
-    						geolocation,
+				}) => (
+					<RadioButtonItem
+						title={description}
+						description={metaddress ? `${address} - ${metaddress.distance.text}` : address}
+						isSelected={currentAddress && currentAddress._id == _id}
+						value={{
+							_id,
+							description,
+							address,
+							reference,
+							geolocation,
 							metaddress
-    					}}
-    					handleChange={onSelect}
-    					trailing={
-    						<Controls
-    							id={_id}
-    							onAddressDeleted={onAddressDeleted}
-    						/>}
-    					trailingProps={{
-    						menuOpen: this.state.menuOpen,
-    						handleOpen: this.handleOpen,
-    						handleClose: this.handleClose
-    					}}
-    				/>
-    			{/* ))} */}
-    			<CustomRoundedButton onClick={this.createAddress}>
-    				<CustomButtonText>{addressBook.length>0?"Agregar otra dirección":"Agregar una dirección"}</CustomButtonText>
-    				<AddIcon />
-    			</CustomRoundedButton>
-    		</Items>
-    	);
-    }
+						}}
+						handleChange={onSelect}
+						trailing={
+							<Controls
+								id={_id}
+								onAddressDeleted={onAddressDeleted}
+							/>}
+						trailingProps={{
+							menuOpen: this.state.menuOpen,
+							handleOpen: this.handleOpen,
+							handleClose: this.handleClose
+						}}
+					/>
+				))}
+				<CustomRoundedButton onClick={this.createAddress}>
+					<CustomButtonText>{addressBook.length > 0 ? "Agregar otra dirección" : "Agregar una dirección"}</CustomButtonText>
+					<AddIcon />
+				</CustomRoundedButton>
+			</Items>
+		);
+	}
 }
 export default withComponents(AddressList);

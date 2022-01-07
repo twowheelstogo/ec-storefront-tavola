@@ -1,19 +1,25 @@
 mutation addAccountAddressBookEntryMutation($input: AddAccountAddressBookEntryInput!) {
   addAccountAddressBookEntry(input: $input) {
     address {
-      _id
-      address1
-      address2
-      city
-      company
-      country
-      fullName
-      isBillingDefault
-      isCommercial
-      isShippingDefault
-      phone
-      postal
-      region
+          _id
+          description
+          address
+          reference
+          geolocation {
+            latitude
+            longitude
+          }
+          metaddress{
+            administrative_area_level_1
+            administrative_area_level_2
+            neighborhood
+            street_address
+            sublocality
+            distance{
+              value
+              text
+            }
+          }
     }
   }
 }
@@ -21,19 +27,25 @@ mutation addAccountAddressBookEntryMutation($input: AddAccountAddressBookEntryIn
 mutation updateAccountAddressBookEntryMutation($input: UpdateAccountAddressBookEntryInput!) {
   updateAccountAddressBookEntry(input: $input) {
     address {
-      _id
-      address1
-      address2
-      city
-      company
-      country
-      fullName
-      isBillingDefault
-      isCommercial
-      isShippingDefault
-      phone
-      postal
-      region
+          _id
+          description
+          address
+          reference
+          geolocation {
+            latitude
+            longitude
+          }
+          metaddress{
+            administrative_area_level_1
+            administrative_area_level_2
+            neighborhood
+            street_address
+            sublocality
+            distance{
+              value
+              text
+            }
+          }
     }
   }
 }
@@ -41,19 +53,25 @@ mutation updateAccountAddressBookEntryMutation($input: UpdateAccountAddressBookE
 mutation removeAccountAddressBookEntryMutation($input: RemoveAccountAddressBookEntryInput!) {
   removeAccountAddressBookEntry(input: $input) {
     address {
-      _id
-      address1
-      address2
-      city
-      company
-      country
-      fullName
-      isBillingDefault
-      isCommercial
-      isShippingDefault
-      phone
-      postal
-      region
+          _id
+          description
+          address
+          reference
+          geolocation {
+            latitude
+            longitude
+          }
+          metaddress{
+            administrative_area_level_1
+            administrative_area_level_2
+            neighborhood
+            street_address
+            sublocality
+            distance{
+              value
+              text
+            }
+          }
     }
   }
 }
