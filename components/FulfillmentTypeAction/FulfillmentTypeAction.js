@@ -9,7 +9,7 @@ class FulfillmentTypeAction extends Component {
 
 	setSelectedDeliveryMethodName = async (method) => {
 		const { submits: { onSelectFulfillmentType } } = this.props;
-		// await onSelectFulfillmentType(method.name);
+		await onSelectFulfillmentType(method.name);
 	}
 
 	renderDeliveryMethods() {
