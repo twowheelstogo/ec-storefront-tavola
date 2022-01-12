@@ -38,22 +38,22 @@ class CardItemSelect extends Component {
         if (onSelect) onSelect(method);
     }
     render() {
-        const { method: {
-            icon, displayName
-        }, selected, actionAlerts } = this.props;
+        const { method: { icon, displayName }, selected, actionAlerts } = this.props;
         return (
             <Card selected={selected} onClick={this.selectCurrentOption}>
 
-                {selected ? 
+                {selected ?
                     <IconoCheck>
-                        <img height={15} 
+                        <img 
+                            height={15}
                             src={"https://firebasestorage.googleapis.com/v0/b/twowheelstogo-572d7.appspot.com/o/logotipos%2FDise%C3%B1o-sin-t%C3%ADtulo.svg?alt=media&token=d19d6a26-8c9c-457c-a5ea-63b69b0bd4d3"}
                             color="blue"
                         />
-                    </IconoCheck> : <IconoCheck></IconoCheck>}
-                    <CardIcon>
-                        <img src={icon} height={30} />
-                    </CardIcon>
+                         </IconoCheck> : <IconoCheck></IconoCheck>
+                }
+                <CardIcon>
+                    <img src={icon} height={30} />
+                </CardIcon>
                 <CardTitle>{displayName}</CardTitle>
             </Card>
         );
