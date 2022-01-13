@@ -88,7 +88,6 @@ class CheckoutSummary extends Component {
         total
       } = cart.checkout.summary;
       
-      console.log(cart.checkout.summary);
       return (
         <Grid item xs={12} className={classes.summary}>
           <CartSummary

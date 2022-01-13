@@ -37,7 +37,7 @@ const StyledField = styled.div`
 
 const StyledLabel = styled.label`
   ${addTypographyStyles("FieldLabel", "labelText")}
-  color: #000000;
+  color: #000000    ;
   display: block;
   margin-bottom: ${applyTheme("FieldLabel.spacingToInput")};
   margin-left: 0;

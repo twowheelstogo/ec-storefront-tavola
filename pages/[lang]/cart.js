@@ -42,6 +42,9 @@ const styles = (theme) => ({
   itemWrapper: {
     borderTop: theme.palette.borders.default,
     borderBottom: theme.palette.borders.default
+  },
+  cartSummarySpacing:{
+    padding: "12px"
   }
 });
 
@@ -92,7 +95,7 @@ class CartPage extends Component {
 
     if (cart && Array.isArray(cart.items) && cart.items.length) {
       return (
-          <Grid item xs={12} md={8} style={{padding:'12px'}}>
+          <Grid item xs={12} md={8} className={classes.cartSummarySpacing}>
             {/* <div className={classes.itemWrapper}> */}
             <CartItems
               hasMoreCartItems={hasMoreCartItems}
