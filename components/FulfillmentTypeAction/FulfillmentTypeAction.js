@@ -14,7 +14,7 @@ class FulfillmentTypeAction extends Component {
 
 	renderDeliveryMethods() {
 		const { deliveryMethods, components: { CardItems }, fulfillmentGroup } = this.props;
-		console.log(this.props)
+
 		return <CardItems
 			items={deliveryMethods.filter((method) => method.enabled)}
 			onSelect={this.setSelectedDeliveryMethodName}

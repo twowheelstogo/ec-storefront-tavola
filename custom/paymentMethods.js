@@ -16,7 +16,7 @@ const paymentMethods = [
 	{
 		displayName: "Tarjeta",
 		InputComponent: EpayPaymentForm,
-		name: "iou_example",
+		name: "epay_card",
 		shouldCollectBillingAddress: true,
 		icon: epayIcon
 	}
