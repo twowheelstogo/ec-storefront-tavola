@@ -7,7 +7,6 @@ import Link from "components/Link";
 import styled from "styled-components";
 
 const ProductMediaWrapper = styled.div`
-  position: relative;
 `;
 
 const StyledTitle = styled.div`
@@ -51,11 +50,16 @@ display: -webkit-box;
 const CardContainerVertical = styled.div`
     border: ${({ withBorder, boderColor }) => withBorder ? boderColor : "none"};
     cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     &:hover:{
         background-color: #EEEEEE;
         transition: background-color .5s;
     }
 `
+const Div = styled.div``;
 
 const CardContainerHorizontal = styled.div`
     border: ${({ withBorder, boderColor }) => withBorder ? boderColor : "none"};
@@ -79,15 +83,15 @@ const styles = (theme) => ({
         fontSize: '16px',
         lineHeight: '17px',
         display: "flex",
-        alignItems: "right",
         justifyContent: "flex-end",
     },
     cardContent: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        flex: '1 1 auto',
-        padding: '5px'
+        padding: '5px',
+        flex: "1 1 auto"
+        
     },
     titleWeb: {
         fontWeight: 800,
@@ -101,11 +105,20 @@ const styles = (theme) => ({
         fontSize: '24px',
         paddingTop: '40px',
         paddingBottom: '40px',
+        paddingLeft: '7px',
         color: '#000000'
     },
     productPadding: {
         paddingLeft: '10px',
     },
+    cardMobil:{
+        paddingLeft: '7px',
+        paddingRight: '7px',
+        paddingBottom:'15px'
+    },
+    productPaddingHorizontaal:{
+        paddingLeft: '56px'
+    }
 })
 
 const HorizontalProductCard = props => {
@@ -136,25 +149,23 @@ const HorizontalProductCard = props => {
     return (
         <Fragment>
             {matches !== true ? (
-                <div className={classes.productPaddingHorizontaal}>
+                <Div className={classes.productPaddingHorizontaal}>
                     {
                         tags.catalogProducts.length !== 0 && (
-                            <div>
-
+                            <Div>
                                 <Typography className={classes.titleWeb}>
                                     {tags.displayTitle}
                                 </Typography>
-                                <Grid container spacing={5}  >
+                                <Grid container spacing={5}>
                                     {
                                         tags.length !== 0 && (
                                             tags.catalogProducts.map((values) => (
-
                                                 <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
                                                     <Link
                                                         href={values.slug && "/product/[...slugOrId]"}
                                                         as={values.slug && `/product/${values.slug}`}
                                                     >
-                                                        <CardContainerHorizontal >
+                                                        <CardContainerHorizontal withBorder boderColor={"2px solid rgba(151, 151, 151, 0.5)"}>
                                                             {
                                                                 values.primaryImage !== null ? (
                                                                     <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
@@ -163,17 +174,17 @@ const HorizontalProductCard = props => {
                                                                     <img src="/images/placeholder.gif" />
                                                                 )
                                                             }
-                                                            <div>
-                                                            </div>
-                                                            <div className={classes.cardContent}>
-                                                                <div>
+                                                            <Div>
+                                                            </Div>
+                                                            <Div className={classes.cardContent}>
+                                                                <Div>
                                                                     <StyledTitle>{values.title}</StyledTitle>
                                                                     <StyledSubtitle>{values.description}</StyledSubtitle>
-                                                                </div>
-                                                                <div>
+                                                                </Div>
+                                                                <Div>
                                                                     <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                                </div>
-                                                            </div>
+                                                                </Div>
+                                                            </Div>
                                                         </CardContainerHorizontal>
                                                     </Link>
 
@@ -183,30 +194,30 @@ const HorizontalProductCard = props => {
                                     }
                                 </Grid>
 
-                            </div>
+                            </Div>
                         )
                     }
-                </div>
+                </Div>
             ) : (
-                <div className={classes.productPadding}>
+                <Div>
                     {
-                        <div>
+                        <Div>
                             {
                                 tags.catalogProducts.length !== 0 && (
-                                    <div>
+                                    <Div>
                                         <Typography className={classes.titleMobil}>
                                             {tags.displayTitle}
                                         </Typography>
-                                        <Grid container spacing={2} >
+                                        <Grid container>
                                             {
                                                 tags.catalogProducts.length !== 0 && (
                                                     tags.catalogProducts.map((values) => (
-                                                        <Grid item xs={6} key={values._id}>
+                                                        <Grid item xs={6} className={classes.cardMobil} key={values._id}>
                                                             <Link
                                                                 href={values.slug && "/product/[...slugOrId]"}
                                                                 as={values.slug && `/product/${values.slug}`}
                                                             >
-                                                                <CardContainerVertical>
+                                                                <CardContainerVertical withBorder boderColor={"2px solid rgba(151, 151, 151, 0.5)"}>
                                                                     <ProductMediaWrapper>
                                                                         <ProgressiveImage
                                                                             fit={"cover"}
@@ -215,15 +226,15 @@ const HorizontalProductCard = props => {
                                                                             srcs={values.primaryImage !== null ? values.primaryImage.URLs : "/images/placeholder.gif"}
                                                                         />
                                                                     </ProductMediaWrapper>
-                                                                    <div className={classes.cardContent}>
-                                                                        <div>
+                                                                    <Div className={classes.cardContent}>
+                                                                        <Div>
                                                                             <StyledTitleVertical>{values.title}</StyledTitleVertical>
                                                                             <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
-                                                                        </div>
-                                                                        <div>
+                                                                        </Div>
+                                                                        <Div>
                                                                             <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                                        </div>
-                                                                    </div>
+                                                                        </Div>
+                                                                    </Div>
                                                                 </CardContainerVertical>
                                                             </Link>
                                                         </Grid>
@@ -231,12 +242,12 @@ const HorizontalProductCard = props => {
                                                 )
                                             }
                                         </Grid>
-                                    </div>
+                                    </Div>
                                 )
                             }
-                        </div>
+                        </Div>
                     }
-                </div>
+                </Div>
             )
             }
         </Fragment >

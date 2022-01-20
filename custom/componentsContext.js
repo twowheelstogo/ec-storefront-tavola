@@ -29,10 +29,10 @@ import AddressBook from "@reactioncommerce/components/AddressBook/v1";
 import Address from "@reactioncommerce/components/Address/v1";
 import AddressCapture from "@reactioncommerce/components/AddressCapture/v1";
 import AddressChoice from "@reactioncommerce/components/AddressChoice/v1";
-import AddressForm from "@reactioncommerce/components/AddressForm/v1";
+// import AddressForm from "@reactioncommerce/components/AddressForm/v1";
 import AddressReview from "@reactioncommerce/components/AddressReview/v1";
 import BadgeOverlay from "@reactioncommerce/components/BadgeOverlay/v1";
-import Button from "@reactioncommerce/components/Button/v1";
+// import Button from "@reactioncommerce/components/Button/v1";
 // import CartItem from "@reactioncommerce/components/CartItem/v1";
 // import CartItemDetail from "@reactioncommerce/components/CartItemDetail/v1";
 import CartItems from "@reactioncommerce/components/CartItems/v1";
@@ -40,11 +40,13 @@ import CartItems from "@reactioncommerce/components/CartItems/v1";
 import CatalogGrid from "@reactioncommerce/components/CatalogGrid/v1";
 import CatalogGridItem from "components/CatalogGridItem";
 import Checkbox from "@reactioncommerce/components/Checkbox/v1";
-import CheckoutAction from "@reactioncommerce/components/CheckoutAction/v1";
+import CheckoutAction from "components/CheckoutAction";
+import CardItems from "components/CardItems";
+import CardItemSelect from "components/CardItemSelect";
 import CheckoutActionComplete from "@reactioncommerce/components/CheckoutActionComplete/v1";
 import CheckoutActionIncomplete from "@reactioncommerce/components/CheckoutActionIncomplete/v1";
 import ErrorsBlock from "@reactioncommerce/components/ErrorsBlock/v1";
-import Field from "@reactioncommerce/components/Field/v1";
+// import Field from "@reactioncommerce/components/Field/v1";
 import InPageMenuItem from "@reactioncommerce/components/InPageMenuItem/v1";
 import InlineAlert from "@reactioncommerce/components/InlineAlert/v1";
 import InventoryStatus from "@reactioncommerce/components/InventoryStatus/v1";
@@ -61,7 +63,7 @@ import SelectableItem from "@reactioncommerce/components/SelectableItem/v1";
 import SelectableList from "@reactioncommerce/components/SelectableList/v1";
 import StockWarning from "@reactioncommerce/components/StockWarning/v1";
 import StripeForm from "@reactioncommerce/components/StripeForm/v1";
-import TextInput from "@reactioncommerce/components/TextInput/v1";
+// import TextInput from "@reactioncommerce/components/TextInput/v1";
 // import CartItemsList from "reactioncommerce/components/CartItems/v1";
 import withLocales from "../lib/utils/withLocales";
 //new components for my 
@@ -74,6 +76,21 @@ import CartItemsList from "components/CartItemsList";
 import QuantityInput from "components/QuantityInput";
 import Price from "components/Price";
 import CartItemDetail from "components/CartItemDetail";
+import MiniCartComponent from "components/MiniCartComponent";
+import IconsActions from "components/IconsActions";
+import SearchBar from "components/SearchBar";
+import SlideHero from "components/SlideHero";
+import CustomFooter from "components/CustomFooter";
+import NavigationHeader from "components/NavigationHeader";
+import CartEmptyMessage from "components/CartEmptyMessage";
+import Button from "components/Button";
+import AddressList from "components/AddressList";
+import RadioButtonItem from "components/RadioButtonItem";
+import BillingForm from "components/BillingForm";
+import TextInput from "components/TextInput";
+import Field from "components/Field";
+import PickupForm from "components/PickupForm";
+import AddressForm from "components/AddressForm";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -134,5 +151,18 @@ export default {
   HorizontalTagsProducts,
   CartItem,
   CartItemsList,
-  CartSummary
+  AddressList,
+  RadioButtonItem,
+  CartSummary,
+  MiniCartComponent,
+  NavigationHeader,
+  IconsActions,
+  SearchBar,
+  SlideHero,
+  CustomFooter,
+  CartEmptyMessage,
+  CardItems,
+  CardItemSelect,
+  BillingForm,
+  PickupForm
 };

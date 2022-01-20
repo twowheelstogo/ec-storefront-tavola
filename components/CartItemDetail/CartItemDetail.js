@@ -24,14 +24,14 @@ const Title = styled.h3`
 `;
 
 const OptionProductSelect = styled.div`
-font-size: 14px;
+font-size: 15px;
 text-align: left; 
 display: flex;
 padding-bottom: 7px; 
 `;
 
 const OptionProductTitle = styled.div`
-font-size: 14px;
+font-size: 15px;
 text-align: left; 
 display: flex;
 font-weight: 800;
@@ -117,7 +117,7 @@ class CartItemDetail extends Component {
             // we allow labels without values and values without labels.
             return (
                 <Attr key={label || value}>
-                    {label ? <span>{}</span> : null} {value}
+                    {label ? <span>{ }</span> : null} {value}
                 </Attr>
             );
         });
@@ -155,6 +155,11 @@ class CartItemDetail extends Component {
                     <div>{title}</div>
                 </Title>
                 {this.renderAttributes()}
+                <div style={{
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    paddingBottom: '5px'
+                }}>Duo Estandar</div>
                 <OptionProductTitle>
                     Duos estandar
                 </OptionProductTitle>

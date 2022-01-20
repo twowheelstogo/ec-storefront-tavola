@@ -14,17 +14,24 @@ fragment OrderCommon on Order {
       ... on ShippingOrderFulfillmentGroupData {
         shippingAddress {
           _id
-          address1
-          address2
-          city
-          company
-          country
-          fullName
-          isCommercial
-          isShippingDefault
-          phone
-          postal
-          region
+          description
+          address
+          reference
+          geolocation {
+            latitude
+            longitude
+          }
+          metaddress{
+            administrative_area_level_1
+            administrative_area_level_2
+            neighborhood
+            street_address
+            sublocality
+            distance{
+              value
+              text
+            }
+          }
         }
       }
     }
@@ -144,18 +151,7 @@ fragment OrderCommon on Order {
     amount {
       displayAmount
     }
-    billingAddress {
-      address1
-      address2
-      city
-      company
-      country
-      fullName
-      isCommercial
-      phone
-      postal
-      region
-    }
+    billingAddress
     displayName
     method {
       name
@@ -194,8 +190,6 @@ fragment OrderCommon on Order {
   totalItemQuantity
   updatedAt
 }
-
-
 # Fragment for order query
 fragment OrderQueryFragment on Order {
   ...OrderCommon

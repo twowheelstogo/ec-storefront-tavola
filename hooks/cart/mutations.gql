@@ -96,3 +96,12 @@ mutation updateFulfillmentOptionsForGroup($input: UpdateFulfillmentOptionsForGro
     }
   }
 }
+
+# update fulfillment type for the provided fulfillment group
+mutation updateFulfillmentTypeForGroup($input:UpdateFulfillmentTypeForGroupInput!){
+  updateFulfillmentTypeForGroup(input: $input){
+    cart {
+      ...CartPayloadFragment
+    }
+  }
+}
