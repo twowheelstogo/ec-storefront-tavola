@@ -71,6 +71,20 @@ const CardContainerHorizontal = styled.div`
         transition: background-color .5s;
     }
 `
+
+const ProductPaddingHorizontal = styled.div`
+padding-left: 56px;
+padding-bottom: 20px;
+`;
+
+const CardContent = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: 5px;
+flex: 1 1 auto;
+`;
+
 const styles = (theme) => ({
     imageProduct: {
         height: "100%",
@@ -117,50 +131,64 @@ const styles = (theme) => ({
         paddingBottom:'15px'
     },
     productPaddingHorizontaal:{
-        paddingLeft: '56px'
+        paddingLeft: '56px',
+        paddingBottom: '20px',
+    },
+    gridSpacing:{
+        paddingRight:'30px'
     }
 })
 
 const HorizontalProductCard = props => {
+    // HorizontalProductCard.propTypes = {
+    //     classes: PropTypes.object,
+    //     currencyCode: PropTypes.string.isRequired,
+    //     isLoadingCatalogItems: PropTypes.bool,
+    //     pageInfo: PropTypes.shape({
+    //         startCursor: PropTypes.string,
+    //         endCursor: PropTypes.string,
+    //         hasNextPage: PropTypes.bool,
+    //         hasPreviousPage: PropTypes.bool,
+    //         loadNextPage: PropTypes.func,
+    //         loadPreviousPage: PropTypes.func
+    //     }),
+    //     pageSize: PropTypes.number.isRequired,
+    //     setPageSize: PropTypes.func.isRequired,
+    //     setSortBy: PropTypes.func.isRequired,
+    //     sortBy: PropTypes.string.isRequired,
+    //     tags: PropTypes.object,
+    // };
     HorizontalProductCard.propTypes = {
         classes: PropTypes.object,
-        currencyCode: PropTypes.string.isRequired,
+        currencyCode: PropTypes.bool,
         isLoadingCatalogItems: PropTypes.bool,
-        pageInfo: PropTypes.shape({
-            startCursor: PropTypes.string,
-            endCursor: PropTypes.string,
-            hasNextPage: PropTypes.bool,
-            hasPreviousPage: PropTypes.bool,
-            loadNextPage: PropTypes.func,
-            loadPreviousPage: PropTypes.func
-        }),
-        pageSize: PropTypes.number.isRequired,
-        setPageSize: PropTypes.func.isRequired,
-        setSortBy: PropTypes.func.isRequired,
-        sortBy: PropTypes.string.isRequired,
+        pageInfo: PropTypes.bool,
+        pageSize: PropTypes.bool,
+        setPageSize: PropTypes.bool,
+        setSortBy: PropTypes.bool,
+        sortBy: PropTypes.bool,
         tags: PropTypes.object,
     };
 
     const { tags, classes, components: { ProgressiveImage } } = props
-    console.log(props);
+    console.log(props)
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
-    console.log(tags)
     return (
         <Fragment>
             {matches !== true ? (
-                <Div className={classes.productPaddingHorizontaal}>
+                <ProductPaddingHorizontal >
                     {
                         tags.catalogProducts.length !== 0 && (
                             <Div>
                                 <Typography className={classes.titleWeb}>
                                     {tags.displayTitle}
                                 </Typography>
-                                <Grid container spacing={5}>
+                                <Grid container direction="row">
                                     {
                                         tags.length !== 0 && (
                                             tags.catalogProducts.map((values) => (
-                                                <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} >
+                                                <Grid item xs={12} sm={6} md={4} lg={4} key={values._id} className={classes.gridSpacing}>
                                                     <Link
                                                         href={values.slug && "/product/[...slugOrId]"}
                                                         as={values.slug && `/product/${values.slug}`}
@@ -168,7 +196,7 @@ const HorizontalProductCard = props => {
                                                         <CardContainerHorizontal withBorder boderColor={"2px solid rgba(151, 151, 151, 0.5)"}>
                                                             {
                                                                 values.primaryImage !== null ? (
-                                                                    <img src={values.primaryImage.URLs.medium} className={classes.imageProduct} ></img>
+                                                                    <img src={values.primaryImage.URLs.medium} className={classes.imageProduct}></img>
 
                                                                 ) : (
                                                                     <img src="/images/placeholder.gif" />
@@ -176,7 +204,7 @@ const HorizontalProductCard = props => {
                                                             }
                                                             <Div>
                                                             </Div>
-                                                            <Div className={classes.cardContent}>
+                                                            <CardContent>
                                                                 <Div>
                                                                     <StyledTitle>{values.title}</StyledTitle>
                                                                     <StyledSubtitle>{values.description}</StyledSubtitle>
@@ -184,7 +212,7 @@ const HorizontalProductCard = props => {
                                                                 <Div>
                                                                     <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
                                                                 </Div>
-                                                            </Div>
+                                                            </CardContent>
                                                         </CardContainerHorizontal>
                                                     </Link>
 
@@ -197,7 +225,7 @@ const HorizontalProductCard = props => {
                             </Div>
                         )
                     }
-                </Div>
+                </ProductPaddingHorizontal>
             ) : (
                 <Div>
                     {
@@ -226,15 +254,15 @@ const HorizontalProductCard = props => {
                                                                             srcs={values.primaryImage !== null ? values.primaryImage.URLs : "/images/placeholder.gif"}
                                                                         />
                                                                     </ProductMediaWrapper>
-                                                                    <Div className={classes.cardContent}>
-                                                                        <Div>
+                                                                    <CardContent>
+                                                                        <div>
                                                                             <StyledTitleVertical>{values.title}</StyledTitleVertical>
                                                                             <StyledSubtitleVertical>{values.description}</StyledSubtitleVertical>
-                                                                        </Div>
-                                                                        <Div>
+                                                                        </div>
+                                                                        <div>
                                                                             <Typography className={classes.textPrice}>{values.pricing[0].displayPrice}</Typography>
-                                                                        </Div>
-                                                                    </Div>
+                                                                        </div>
+                                                                    </CardContent>
                                                                 </CardContainerVertical>
                                                             </Link>
                                                         </Grid>

@@ -196,7 +196,6 @@ class CartSummary extends Component {
   renderHeader() {
     const { cartTitleText, itemsQuantity, itemsText } = this.props;
     const itemsLabel = itemsQuantity >= 0 ? `${itemsQuantity} ${itemsText}` : null;
-    console.log(this.props);
     return (
       <thead>
         <tr>

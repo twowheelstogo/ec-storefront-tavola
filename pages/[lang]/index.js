@@ -58,7 +58,6 @@ class ProductGridPage extends Component {
       uiStore,
       tags
     } = this.props;
-    console.log('tags en el index',tags)
     const pageSize = query && inPageSizes(query.limit) ? parseInt(query.limit, 10) : uiStore.pageSize;
     const sortBy = query && query.sortby ? query.sortby : uiStore.sortBy;
     let pageTitle;

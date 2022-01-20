@@ -117,11 +117,8 @@ class CheckoutActions extends Component {
 
 
   setFulfillmentType = async (type) => {
-    console.log('type');
 		const { checkoutMutations: { onSetFulfillmentType } } = this.props;
 		const { checkout: { fulfillmentGroups } } = this.props.cart;
-    console.log(fulfillmentTypeInput);
-    console.log(onSetFulfillmentType);
 		const fulfillmentTypeInput = {
 			fulfillmentGroupId: fulfillmentGroups[0]._id,
 			fulfillmentType: type
@@ -164,7 +161,6 @@ class CheckoutActions extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;    
-      console.log(this.props.cart.checkout.summary.total.displayAmount);    
   }
 
   buildData = ({ step, action }) => ({
@@ -392,7 +388,6 @@ class CheckoutActions extends Component {
 
     let PaymentComponent = PaymentsCheckoutAction;
     if (!Array.isArray(paymentMethods) || paymentMethods.length === 0) {
-      console.log("empty payment methods");
       PaymentComponent = NoPaymentMethodsMessage;
     }
 
@@ -438,7 +433,6 @@ class CheckoutActions extends Component {
           remainingAmountDue,          
           summary,
 					onChange: this.setPaymentInputs,          
-          //onChange: (value) => console.log(value)
         }
       },
       {

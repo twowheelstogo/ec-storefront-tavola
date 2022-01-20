@@ -212,8 +212,6 @@ class CatalogGridItem extends Component {
       badgeProps.badgeLabels = badgeLabels;
     }
 
-    console.log('slug',product)
-
     return (
       <div className={className}>
         <Link

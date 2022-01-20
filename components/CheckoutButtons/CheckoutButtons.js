@@ -45,12 +45,18 @@ class CheckoutButtons extends Component {
   static defaultProps = {
     primaryButtonRoute: "/cart/checkout",
     primaryButtonText: "Procesar a la compra",
+    secondButtonRoute: "/",
     secondButtonText: "Seguir comprando"
   };
 
   handleOnClick = () => {
     const { primaryButtonRoute } = this.props;
     Router.push(primaryButtonRoute);
+  }
+
+  handleOnClickSecond = () => {
+    const { secondButtonRoute } = this.props;
+    Router.push(secondButtonRoute)
   }
 
   render() {
@@ -70,6 +76,7 @@ class CheckoutButtons extends Component {
             fullWidth
             className={buyHome}
             variant="contained"
+            onClick={this.handleOnClickSecond}
             disableRipple
           >
             {secondButtonText}

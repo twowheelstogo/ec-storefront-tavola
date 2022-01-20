@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import { CustomPropTypes } from "@reactioncommerce/components/utils";
 import { withComponents } from "@reactioncommerce/components-context";
 const Items = styled.div`
-    display: grid;
-    overflow-x: hidden;
-    gap: 15px;
-    grid-auto-flow: column;
-    justify-content: flex-start;
-    grid-auto-columns: minmax(180px,180px);
-    scrollbar-width: none;
+display: grid;
+overflow-x: scroll;
+gap: 15px;
+grid-auto-flow: column;
+justify-content: flex-start;
+grid-auto-columns: minmax(180px,180px);
+scrollbar-width: none;
+
 `;
 class CardItemList extends Component {
     static propTypes = {

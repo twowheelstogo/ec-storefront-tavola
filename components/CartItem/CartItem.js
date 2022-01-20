@@ -37,6 +37,7 @@ position: relative;
 text-align: right;
 padding-bottom: 20px;
 padding-top:20px;
+padding-left:40px;
 `;
 
 const ItemContentSubtotal = styled.div`
@@ -259,7 +260,7 @@ class CartItem extends Component {
         } = components || {};
 
         return (
-            <Item style={{ borderBottom: '1px solid #dcdcdc' }} className={className}>
+            <Item style={{ borderBottom: '1px solid #dcdcdc'}} className={className}>
                 {this.renderImage()}
                 <ItemContent>
                     <ItemContentDetail>

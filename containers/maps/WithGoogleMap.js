@@ -57,11 +57,9 @@ const enhance = compose(
 			setMetadataMarker(_meta);
 		},
 		whenHasMetaAddress:({setMetadataMarker}) => async ( _meta) =>{
-			console.log("hasMetaDress");
 			setMetadataMarker(_meta);
 		},
 		whenHasLocation:({setLocation}) => async ( location) =>{
-			console.log("hasLocation");
 			setLocation(location);
 		},
 	}),

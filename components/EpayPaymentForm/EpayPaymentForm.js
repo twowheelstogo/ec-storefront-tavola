@@ -104,7 +104,6 @@ function EpayPaymentForm(props, ref) {
 	} = useReactoForm({
 		isReadOnly: isSaving,
 		onChange(formData) {
-			console.log(formData)
 			const resultDoc = buildResult(formData);
 			const stringDoc = JSON.stringify(resultDoc);
 			if (stringDoc !== lastDocRef.current) {
