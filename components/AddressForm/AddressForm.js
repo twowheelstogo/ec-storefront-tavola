@@ -97,20 +97,20 @@ class AddressForm extends Component {
                                 <ErrorsBlock names={["description"]} />
                             </Field>
                         </ColFull>
-                        <ColFull>
+                        {/* <ColFull>
                             <FieldTitle>{"Quién recibe?"}</FieldTitle>
-                            {/* <Field name="Receptor" label="Obligatorio" labelFor={receptorInputId} isRequired>
+                            <Field name="Receptor" label="Obligatorio" labelFor={receptorInputId} isRequired>
                                 <TextInput
                                     id={receptorInputId}
                                     name="Receptor"
                                     placeholder="Escribe aqui..."
                                 />
                                 <ErrorsBlock names={["Receptor"]} />
-                            </Field> */}
+                            </Field>
                         </ColFull>
                         <ColFull>
                             <FieldTitle>{"Teléfono de quién recibe"}</FieldTitle>
-                            {/* <Field name="Teléfono" label="Obligatorio" labelFor={telefonoInputId} isRequired>
+                            <Field name="Teléfono" label="Obligatorio" labelFor={telefonoInputId} isRequired>
                                 <TextInput
                                     id={telefonoInputId}
                                     name="Teléfono"
@@ -118,8 +118,8 @@ class AddressForm extends Component {
                                     type="number"
                                 />
                                 <ErrorsBlock names={["Teléfono"]} />
-                            </Field> */}
-                        </ColFull>
+                            </Field>
+                        </ColFull> */}
                     </Grid>
                 </Form>
             </Fragment>

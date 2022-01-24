@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 		marginTop:"10px"
 	},
 	labelColor: {
-		color: "#fff"
+		color: "#1D0D13"
 	},
 	textInput: {
 		width: "100%",
@@ -176,7 +176,7 @@ function EpayPaymentForm(props, ref) {
 					values,
 					errors
 				}) => {
-					// handleChange(values);
+					handleChange(values);
 					return (
 						<div onSubmit={handleSubmit}>
 							<form className={className}>

@@ -13,7 +13,7 @@ networks:
 
 services:
   web:
-    image: reactioncommerce/example-storefront:5.1.0
+    image: luiscelano/tv-storefront:pre-launch
     env_file:
       - ./.env
     networks:
