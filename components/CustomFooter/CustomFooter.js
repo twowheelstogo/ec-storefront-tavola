@@ -80,40 +80,33 @@ const CustomFooter = (props) => {
   };
   return (
     <>
-      <br></br>
-      <br></br>
-
-      <div
-        className={classes.root}        
-      >
-        <Grid container direction="row" spacing={2} xs={12} md={11} lg={11}>
+      <div className={classes.root}>
+        <Grid key={1} container direction="row" spacing={2} columns={{ xs: 12, md: 11, lg: 11 }}>
           <Grid item xs={12} md={3} lg={3}>
-            <img src={Descripcion.urlLogo} width={"130px"} />
+            <img key={2} src={Descripcion.urlLogo} width={106} height={68} />
           </Grid>
-          <Grid item xs={12} md={3} className={classes.items}></Grid>
+          <Grid key={3} item xs={12} md={3} className={classes.items}></Grid>
 
-          <Grid item xs={12} md={3} className={classes.items}>
+          <Grid key={4} item xs={12} md={3} className={classes.items}>
             <CustomTitle>{Descripcion.Mensaje1}</CustomTitle>
-            {Object.keys(Descripcion.ContenidoMensaje1).map((i) => {
-              return <CustomItem>{Descripcion.ContenidoMensaje1[i]}</CustomItem>;
-            })}
+            {Object.keys(Descripcion.ContenidoMensaje1).map((i) => <CustomItem key={i.toString()}>{Descripcion.ContenidoMensaje1[i]}</CustomItem>)}
           </Grid>
-          <Grid item xs={12} md={3} lg={3} className={classes.items}>
+          <Grid key={5} item xs={12} md={3} lg={3} className={classes.items}>
             <CustomTitle>{Descripcion.Mensaje2}</CustomTitle>
-            {Object.keys(Descripcion.ContenidoMensaje2).map((i) => {
-              return (
-                <Link href={`${Descripcion.ContenidoMensaje2[i].ruta}`}>
+            {Object.keys(Descripcion.ContenidoMensaje2).map((i) => (
+                <Link 
+                key={i.toString()}
+                href={`${Descripcion.ContenidoMensaje2[i].ruta}`}>
                   <CustomItem>{Descripcion.ContenidoMensaje2[i].Titulo}</CustomItem>
                 </Link>
-              );
-            })}
+              ))}
           </Grid>
         </Grid>
 
-        <Grid item xs={11} md={11} lg={11}>
+        <Grid key={6} item xs={11} md={11} lg={11}>
           <Divider className={classes.divider}/>
         </Grid>
-        <Grid item xs={11} md={11} lg={11} className={classes.bottomItems}>
+        <Grid key={7} item xs={11} md={11} lg={11} className={classes.bottomItems}>
           <Hidden xsDown>
             <div className={classes.flexItems}>
               <div className={classes.copyright}>
@@ -129,6 +122,7 @@ const CustomFooter = (props) => {
             {Object.keys(Descripcion.RedesSociales).map((i) => {
               return (
                 <IconButton
+                  key={i.toString()}
                   color="inherit"
                   size="small"
                   onClick={() => goToPage(`${Descripcion.RedesSociales[i].ruta}`)}

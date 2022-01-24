@@ -122,13 +122,6 @@ class CartPage extends Component {
 
     if (cart && cart.checkout && cart.checkout.summary && Array.isArray(cart.items) && cart.items.length) {
       const { fulfillmentTotal, itemTotal, surchargeTotal, taxTotal, total } = cart.checkout.summary;
-      console.log({
-        fulfillmentTotal,
-        itemTotal,
-        surchargeTotal,
-        taxTotal,
-        total
-      })
       return (
         <Grid item xs={12} md={3}>
           <CartSummary
@@ -161,15 +154,6 @@ class CartPage extends Component {
           title={`Cart | ${shop && shop.name}`}
           meta={[{ name: "description", content: shop && shop.description }]}
         />
-
-        {/* <Grid container>
-          <Grid item xs = {12} md = {6}>
-            <CartItem/>
-          </Grid>
-          <Grid item xs = {12} md = {6}>
-            <CartSummary/>
-          </Grid>
-        </Grid> */}
         <section>
           <Typography className={classes.title} variant="h6" align="center">
             Mi Carrito
@@ -177,17 +161,6 @@ class CartPage extends Component {
           <Grid container>
             {this.renderCartItems()}
             {this.renderCartSummary()}
-            {/* <Grid className={classes.customerSupportCopy} item>
-              <Typography paragraph variant="caption">
-                Have questions? call <span className={classes.phoneNumber}>1.800.555.5555</span>
-              </Typography>
-              <Typography paragraph variant="caption">
-                <Link href="#">Shipping information</Link>
-              </Typography>
-              <Typography paragraph variant="caption">
-                <Link href="#">Return policy</Link>
-              </Typography>
-            </Grid> */}
           </Grid>
         </section>
       </Layout>

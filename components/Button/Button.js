@@ -14,7 +14,7 @@ const paddingFunc = (props) => {
 const ButtonDiv = styled.div`
   -webkit-font-smoothing: antialiased;
   align-items: center;
-  background-color: #000;
+  background-color: #FFFFFF;
   border-color: #000;
   border-style: solid;
   border-width: 1px;
@@ -57,6 +57,7 @@ const ButtonDiv = styled.div`
   padding-top: ${paddingFunc};
   padding-bottom: ${paddingFunc};
   position: relative;
+  color:#000; 
   text-align: center;
   user-select: none;
   width: ${(props) => (props.isFullWidth ? "100%" : "fit-content")};

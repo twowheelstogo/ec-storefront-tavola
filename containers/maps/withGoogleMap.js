@@ -56,12 +56,10 @@ const enhance = compose(
 			let _meta = await AddressMetadataService.getAddressMetadata(locationRef.latitude, locationRef.longitude, token);
 			setMetadataMarker(_meta);
 		},
-		whenHasMetaAddress: ({ setMetadataMarker }) => async (_meta) => {
-			console.log("hasMetaDress");
+		whenHasMetaAddress:({setMetadataMarker}) => async ( _meta) =>{
 			setMetadataMarker(_meta);
 		},
-		whenHasLocation: ({ setLocation }) => async (location) => {
-			console.log("hasLocation");
+		whenHasLocation:({setLocation}) => async ( location) =>{
 			setLocation(location);
 		},
 	}),

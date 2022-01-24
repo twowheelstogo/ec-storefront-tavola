@@ -2,7 +2,6 @@ import fetch from 'isomorphic-unfetch';
 
 const getAddressMetadata = async (lat, lng, accessToken) => {
     try{
-        console.log("entrooo");
         let url = process.env.INVOICE_URL;
         url += "/api/address";
         url += `/lat/${encodeURIComponent(lat)}`;

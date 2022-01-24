@@ -89,6 +89,7 @@ class Layout extends Component {
         <div className={classes.root}>
           {/* <Header shop={shop} viewer={viewer} /> */}
           <NavigationHeader
+            withHero={withHero}
             shop={shop}
             viewer={viewer}
             Logo={Logo}
@@ -99,7 +100,6 @@ class Layout extends Component {
               "https://firebasestorage.googleapis.com/v0/b/twg-vehicle-dashboard.appspot.com/o/Iconos%2FLaTavolaInicio.jpg?alt=media&token=c60c0f5b-3d2b-43a2-a537-4d0565d5f3cd"
             }
             MessageCover={"LA TAVOLA CREATIVE BISTRO"}
-            BanderaSlideHero={withHero}
           />
 
           <main className={classes.main}>

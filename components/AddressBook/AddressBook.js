@@ -39,9 +39,6 @@ const CustomAddAddressForm = withGoogleMaps((props) => {
 				metaddress: { ...googleProps.metadataMarker }
 			});
 		}
-
-		console.log(input);
-
 		onSubmit(input);
 	};
 
@@ -258,8 +255,6 @@ class AddressBook extends Component {
 			},
 			label: address.description
 		}));
-		console.log(items);
-
 		const itemAddFormProps = {
 			isSaving,
 			onSubmit: this.handleAddAddress,

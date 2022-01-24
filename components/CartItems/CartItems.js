@@ -10,7 +10,7 @@ const styles = (theme) => ({
     display: "flex",
     justifyContent: "center",
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   cfXPgA: {
     paddingLeft: 0,

@@ -254,7 +254,6 @@ class MiniCartComponent extends Component {
 
                </Grid>
                {/* {"Total " + summary.total.displayAmount} */}
-
                {(CartCheckoutButton && <CartCheckoutButton onClick={onCheckoutButtonClick} />) || (
                   <Button actionType="important" isFullWidth onClick={onCheckoutButtonClick}>
                      {checkoutButtonText}

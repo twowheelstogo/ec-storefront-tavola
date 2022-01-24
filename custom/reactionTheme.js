@@ -52,7 +52,7 @@ const theme = createMuiTheme({
       selected: "#f5f5f5"
     },
     colors: {
-      buttonBorderColor: "#EA6D23",
+      buttonBorderColor: "#C88E2B",
       CartSummary:'#F9F9F9',
       //color principal de la letra
       TextTheme: "#1D0D13",

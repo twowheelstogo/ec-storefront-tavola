@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
 import { CustomPropTypes } from "@reactioncommerce/components/utils";
 
-const Items = styled.div``;
+const Items = styled.div`
+`;
 
 class CartItems extends Component {
   static propTypes = {

@@ -88,9 +88,9 @@ class IconsActions extends Component {
       }
       return nuevo;
     };
-    console.log(width);
     return (
-      <Grid container className={classes.root} spacing={() => Validar(width)}>
+      <Grid container style={{width:"100%"}} className={classes.root} spacing={
+        width == "xs" ? 1 : width == "lg" ? 2 :1}>
         <Grid item xs={1} md={2} lg={2} className={classes.Usuario}>
           <AccountDropdown/>
         </Grid>

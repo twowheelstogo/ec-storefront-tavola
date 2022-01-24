@@ -39,7 +39,7 @@ HomePage.propTypes = {
     currencyCode: PropTypes.string,
     isLoadingCatalogItems: PropTypes.bool,
     tags: PropTypes.array,
-    addItemsToCart: PropTypes.func.isRequired,
+    addItemsToCart: PropTypes.func,
     // onChangeCartItemsQuantity: PropTypes.func.isRequired
 };
 
