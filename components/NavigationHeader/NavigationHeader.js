@@ -238,11 +238,11 @@ class NavigationHeader extends Component {
             </Grid>
           </Grid>
           {/* Espacio Extra */}
-          <Grid container style={{width:"100%"}}>
+          {/* <Grid container style={{width:"100%"}}>
           <Grid item xs={11} key={9} md={11} lg={11} className={classes.Espacio2}>
             <h1> </h1>
           </Grid>
-          </Grid>
+          </Grid> */}
 
           {withHero ? <SlideHero title={MessageCover} subtitle={""} background={ImageCoverUrl} type={"jpg"} /> : null}
         </>
@@ -286,11 +286,11 @@ class NavigationHeader extends Component {
           </Grid>
 
           {/* Espacio Extra */}
-          <Grid container style={{width:"100%"}}>
+          {/* <Grid container style={{width:"100%"}}>
           <Grid item key={7} xs={11} md={11} lg={11} className={classes.Espacio2}>
             <h1> </h1>
           </Grid>
-          </Grid>
+          </Grid> */}
           {withHero ? <SlideHero title={MessageCover} subtitle={""} background={ImageCoverUrl} type={"jpg"} /> : null}            
         </>
       )}
