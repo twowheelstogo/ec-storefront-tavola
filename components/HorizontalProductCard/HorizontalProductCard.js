@@ -135,7 +135,8 @@ const styles = (theme) => ({
         paddingBottom: '20px',
     },
     gridSpacing:{
-        paddingRight:'30px'
+        paddingRight:'30px',
+        paddingBottom: '30px'
     }
 })
 

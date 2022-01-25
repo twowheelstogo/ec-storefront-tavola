@@ -48,7 +48,7 @@ class SearchBar extends Component {
   };
 
   render() {
-    const { classes, Metodo } = this.props;
+    const { classes, Metodo,size } = this.props;
     return (
       <div className={classes.root}>
         <TextField
@@ -57,6 +57,7 @@ class SearchBar extends Component {
           placeholder="Buscar producto..."
           fullWidth
           className={classes.TextField_}
+          size={size}
           onChange={(e) => {
             this.setState({ Busqueda: e.target.value });
           }}
