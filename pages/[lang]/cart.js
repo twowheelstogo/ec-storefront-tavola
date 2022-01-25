@@ -5,7 +5,7 @@ import inject from "hocs/inject";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import CartEmptyMessage from "@reactioncommerce/components/CartEmptyMessage/v1";
+import CartEmptyMessage from "components/CartEmptyMessage";
 import CartSummary from "components/CartSummary";
 import withCart from "containers/cart/withCart";
 import CartItems from "components/CartItems";
@@ -18,13 +18,21 @@ import { withApollo } from "lib/apollo/withApollo";
 import fetchPrimaryShop from "staticUtils/shop/fetchPrimaryShop";
 import fetchTranslations from "staticUtils/translations/fetchTranslations";
 import { withComponents } from "@reactioncommerce/components-context";
-
 const styles = (theme) => ({
+  contenedorPrincipal:{
+    ["@media (min-width:800px)"]: {
+      display:"flex",justifyContent:"center"
+    },
+    ["@media(min-width:600px) and (max-width:799px)"]: {
+      display:"flex",justifyContent:"space-evenly"
+    },   
+  },
   cartEmptyMessageContainer: {
-    margin: "80px 0"
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   checkoutButtonsContainer: {
-    backgroundColor: theme.palette.reaction.black02,
+    backgroundColor: "#FAFAFA",
     padding: theme.spacing(2)
   },
   customerSupportCopy: {
@@ -43,11 +51,12 @@ const styles = (theme) => ({
     borderTop: theme.palette.borders.default,
     borderBottom: theme.palette.borders.default
   },
-  cartSummarySpacing:{
-    padding: "12px"
+  paddingCartSummary:{
+    ["@media(min-width:900px)"]: {
+      marginTop:"100px"
+    }, 
   }
 });
-
 class CartPage extends Component {
   static propTypes = {
     cart: PropTypes.shape({
@@ -75,28 +84,42 @@ class CartPage extends Component {
       description: PropTypes.string
     })
   };
-
   handleClick = () => Router.push("/");
-
   handleItemQuantityChange = (quantity, cartItemId) => {
     const { onChangeCartItemsQuantity } = this.props;
-
     onChangeCartItemsQuantity({ quantity, cartItemId });
   };
-
   handleRemoveItem = async (itemId) => {
     const { onRemoveCartItems } = this.props;
-
     await onRemoveCartItems(itemId);
   };
-
-  renderCartItems() {
+  renderEmpty()
+  {
     const { cart, classes, hasMoreCartItems, loadMoreCartItems } = this.props;
-
     if (cart && Array.isArray(cart.items) && cart.items.length) {
       return (
-          <Grid item xs={12} md={8} className={classes.cartSummarySpacing}>
-            {/* <div className={classes.itemWrapper}> */}
+          <div>            
+          </div>
+      );
+    }
+    return (
+      <Grid item xs={9} sm={5} md={5} lg={5} className={classes.cartEmptyMessageContainer}>
+        <br/><br/>
+        <CartEmptyMessage onClick={this.handleClick} />
+        <br/><br/><br/><br/><br/><br/>
+      </Grid>
+    );
+  }
+  renderCartItems() {
+    const { cart, classes, hasMoreCartItems, loadMoreCartItems } = this.props;
+    if (cart && Array.isArray(cart.items) && cart.items.length) {
+      return (
+          <>
+           <Typography className={classes.title} variant="h6" align="center">
+            Mi Carrito
+          </Typography>
+          <br/>
+            {/* <div className={classes.itemWrapper}>  */}
             <CartItems
               hasMoreCartItems={hasMoreCartItems}
               onLoadMoreCartItems={loadMoreCartItems}
@@ -104,26 +127,28 @@ class CartPage extends Component {
               onChangeCartItemQuantity={this.handleItemQuantityChange}
               onRemoveItemFromCart={this.handleRemoveItem}
             />
-            {/* </div> */}
-          </Grid>
+            {/* </div>  */}
+          </>
       );
     }
-
     return (
-      <Grid item xs={12} className={classes.cartEmptyMessageContainer}>
-        <CartEmptyMessage onClick={this.handleClick} />
-      </Grid>
+      <div>            
+      </div>
     );
   }
-
   renderCartSummary() {
     const { cart, classes } = this.props;
-
-
     if (cart && cart.checkout && cart.checkout.summary && Array.isArray(cart.items) && cart.items.length) {
       const { fulfillmentTotal, itemTotal, surchargeTotal, taxTotal, total } = cart.checkout.summary;
+      console.log({
+        fulfillmentTotal,
+        itemTotal,
+        surchargeTotal,
+        taxTotal,
+        total
+      })
       return (
-        <Grid item xs={12} md={3}>
+        <>
           <CartSummary
             displayShipping={fulfillmentTotal && fulfillmentTotal.displayAmount}
             displaySubtotal={itemTotal && itemTotal.displayAmount}
@@ -131,36 +156,39 @@ class CartPage extends Component {
             displayTax={taxTotal && taxTotal.displayAmount}
             displayTotal={total && total.displayAmount}
             itemsQuantity={cart.totalItemQuantity}
-          />
-          <div className={classes.checkoutButtonsContainer}>
+          />      
+             <div className={classes.checkoutButtonsContainer}>
             <CheckoutButtons />
-          </div>
-        </Grid>
+            </div>    
+        </>
       );
     }
-
     return null;
   }
-
   render() {
     const { cart, classes, shop, components: { CartItem, CartSummary } } = this.props;
     // when a user has no item in cart in a new session, this.props.cart is null
     // when the app is still loading, this.props.cart is undefined
     if (typeof cart === "undefined") return <PageLoading delay={0} />;
-
     return (
       <Layout shop={shop}>
         <Helmet
           title={`Cart | ${shop && shop.name}`}
           meta={[{ name: "description", content: shop && shop.description }]}
         />
-        <section>
-          <Typography className={classes.title} variant="h6" align="center">
-            Mi Carrito
-          </Typography>
-          <Grid container>
+        
+        <section>         
+          <Grid container className={classes.contenedorPrincipal}>
+          <Grid item xs={12} sm={12} md={5} lg={7} style={{padding:'12px'}}>
             {this.renderCartItems()}
-            {this.renderCartSummary()}
+          </Grid>
+          <Grid item xs={1} sm={12} md={2} lg={1}></Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3} className={classes.paddingCartSummary}>
+            {this.renderCartSummary()}         
+            </Grid>
+            
+            
+            {this.renderEmpty()}
           </Grid>
         </section>
       </Layout>
@@ -181,5 +209,4 @@ export async function getServerSideProps({ params: { lang } }) {
     }
   };
 }
-
 export default withApollo()(withComponents(withStyles(styles)(withCart(inject("uiStore")(CartPage)))));

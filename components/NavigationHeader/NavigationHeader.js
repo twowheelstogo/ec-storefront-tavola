@@ -39,7 +39,7 @@ const styles = (theme) => ({
       marginLeft: "auto",
       marginRight: "auto",
       marginTop:"10px",
-      marginBottom: "-18px"
+      marginBottom:"6px"
     },
     ["@media (min-width:600px)"]: {
       marginTop: "1%",
