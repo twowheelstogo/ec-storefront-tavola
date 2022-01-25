@@ -30,6 +30,12 @@ const styles = (theme) => ({
   TextField_:{
     backgroundColor: "#FFFFFF",
     borderRadius: '4px'
+  },
+  Contenedor:{
+    ["@media (max-width:599px)"]: {
+      borderLeft: "2px solid #979797",  
+      height: "41px"    
+    }  
   }
 });
 
@@ -73,8 +79,9 @@ class SearchBar extends Component {
               notchedOutline: classes.notchedOutline,
             },
             endAdornment: (
-              <InputAdornment position="end" className={classes.InputAdornment_}>                
-                <Magnify className={classes.Magnify_}  onClick={() => Metodo(this.state.Busqueda)} />
+              <InputAdornment position="end" className={classes.InputAdornment_}>
+                <div className={classes.Contenedor}><p style={{color:"transparent"}}>ss</p></div>  
+                <Magnify className={classes.Magnify_}  onClick={() => Metodo(this.state.Busqueda)} />                            
               </InputAdornment>
             ),
           }}
