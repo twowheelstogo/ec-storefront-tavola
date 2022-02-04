@@ -5,7 +5,7 @@ import { useApolloClient } from "@apollo/client";
 import Head from "next/head";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import CartEmptyMessage from "@reactioncommerce/components/CartEmptyMessage/v1";
+import CartEmptyMessage from "components/CartEmptyMessage";
 import { StripeProvider } from "react-stripe-elements";
 import CheckoutActions from "components/CheckoutActions";
 import CheckoutSummary from "components/CheckoutSummary";
@@ -19,7 +19,6 @@ import useAvailablePaymentMethods from "hooks/availablePaymentMethods/useAvailab
 // import useAddressValidation from "hooks/address/useAddressValidation";
 import useTranslation from "hooks/useTranslation";
 import definedPaymentMethods from "custom/paymentMethods";
-
 import { locales } from "translations/config";
 import fetchPrimaryShop from "staticUtils/shop/fetchPrimaryShop";
 import fetchTranslations from "staticUtils/translations/fetchTranslations";
@@ -35,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   cartSummary: {
     maxWidth: "400px",
     alignSelf: "flex-start",
-    backgroundColor: theme.palette.colors.CartSummary,
+    //backgroundColor: theme.palette.colors.CartSummary,
+    backgroundColor: "#F6F6F6",    
     padding: '5px 10px'
   },
   checkoutContent: {
@@ -44,11 +44,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem",
     [theme.breakpoints.down("md")]: {
       maxWidth: "100%"
-    }
+    },    
   },
   checkoutContentContainer: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",    
   },
 
   flexContainer: {
@@ -88,7 +88,43 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.primary.dark
   },
-  root: {}
+  Contenedor:{
+    ["@media (max-width:599px)"]: {
+    backgroundColor: "#202124"
+    }
+  },
+  root: {},
+  breadcrumbGrid: {		      
+    padding: theme.spacing(1),  
+    ["@media (min-width:960px)"]: {
+      marginLeft: theme.spacing(2),
+    },
+    ["@media (max-width:959px)"]: {
+      marginLeft: theme.spacing(0)
+    },    
+    
+    ["@media (min-width:600px)"]: {
+      marginBottom: theme.spacing(0.5),
+		marginTop: theme.spacing(0.5),  
+    },
+    ["@media (max-width:959px)"]: {      
+		  marginTop: "-1px",  
+    },          
+	},
+  page: {
+    backgroundColor: "#202124",
+    ["@media (min-width:600px)"]: {
+      height: '43px',   
+    },
+    ["@media (max-width:599px)"]: {
+      height: '33px',   
+    },    		
+	},
+  Dividers:{
+    ["@media (min-width:600px)"]: {
+      height: '60px',   
+    },    
+  }
 }));
 
 const Checkout = ({ router }) => {
@@ -109,7 +145,8 @@ const Checkout = ({ router }) => {
     hasMoreCartItems,
     loadMoreCartItems,
     onRemoveCartItems,
-    onChangeCartItemsQuantity
+    onChangeCartItemsQuantity,
+    
   } = useCart();
 
   const [availablePaymentMethods = [], isLoadingAvailablePaymentMethods] = useAvailablePaymentMethods();
@@ -131,7 +168,8 @@ const Checkout = ({ router }) => {
       setStripe(window.Stripe(process.env.STRIPE_PUBLIC_API_KEY));
     }
   }), [stripe]; // eslint-disable-line no-sequences
-
+  
+  
   // eslint-disable-next-line react/no-multi-comp
   const renderCheckoutContent = () => {
     // sanity check that "tries" to render the correct /cart view if SSR doesn't provide the `cart`
@@ -141,7 +179,7 @@ const Checkout = ({ router }) => {
         <div className={classes.emptyCartContainer}>
           <div className={classes.emptyCart}>
             <div>
-              <CartEmptyMessage onClick={() => Router.push("/")} messageText="Your cart is empty." buttonText="Go to main page" />
+              <CartEmptyMessage onClick={() => Router.push("/")} messageText="Tu carro se encuentra vacío." buttonText="Ir a página principal" />
             </div>
           </div>
         </div>
@@ -154,7 +192,7 @@ const Checkout = ({ router }) => {
           <div className={classes.emptyCartContainer}>
             <div className={classes.emptyCart}>
               <div>
-                <CartEmptyMessage onClick={() => Router.push("/")} messageText="Your cart is empty." buttonText="Go to main page" />
+                <CartEmptyMessage onClick={() => Router.push("/")} messageText="Tu carro se encuentra vacío." buttonText="Ir a la página principal" />
               </div>
             </div>
           </div>
@@ -173,11 +211,10 @@ const Checkout = ({ router }) => {
         <StripeProvider stripe={stripe}>
           <div className={classes.checkoutContentContainer}>
             <div className={classes.checkoutContent}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={5} className={classes.Contenedor} >
                   <div className={classes.flexContainer}>
-                    <div className={classes.cartSummary}>
-                      <div className={classes.titleResume}>Revisa Tu Orden</div>
+                    <div className={classes.cartSummary}>                      
                       <CheckoutSummary
                         cart={cart}
                         hasMoreCartItems={hasMoreCartItems}
@@ -223,7 +260,11 @@ const Checkout = ({ router }) => {
   }
 
   return (
-    <Layout shop={shop}>
+    <Layout shop={shop}
+      router={router}
+      routerLabel={'Checkout page'}
+      routerType={1}
+    >           
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={shop && shop.description} />
@@ -234,7 +275,7 @@ const Checkout = ({ router }) => {
 };
 
 Checkout.propTypes = {
-  router: PropTypes.object
+  router: PropTypes.object,  
 };
 
 /**

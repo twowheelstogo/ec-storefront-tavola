@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { TextField, InputAdornment,Divider } from "@material-ui/core";
+import { TextField, InputAdornment,Box,CircularProgress,Grid } from "@material-ui/core";
 import { Magnify } from "mdi-material-ui";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 //import { withComponents } from "@reactioncommerce/components-context";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import Router from "translations/i18nRouter";
 
 const styles = (theme) => ({
   root: {
@@ -34,61 +36,149 @@ const styles = (theme) => ({
   Contenedor:{
     ["@media (max-width:599px)"]: {
       borderLeft: "2px solid #979797",  
-      height: "41px"    
+      height: "43px"    
     }  
-  }
+  },
+  Letra:{
+    color: '#000'
+  },
+  ImageBorder: {
+    border: "2px solid #fff"
+  },
+  ContenedorPrincipal: {    
+    borderBottom: "2px solid #fff",
+    color: "#202124",  
+    '&:hover':{
+      backgroundColor: '#F6F6F6'
+    }
+  },
+  ContenedorSecundario: {
+    backgroundColor: "#202124",    
+  },
+  option: {
+    backgroundColor: "#FFF",  
+    // Hover
+    '&[data-focus="true"]': {
+       backgroundColor: '#F6F6F6',       
+    },
+    // Selected
+    '&[aria-selected="true"]': {
+       backgroundColor: '#F6F6F6',
+    },
+ }
 });
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { Busqueda: "" };
+    this.state = { Busqueda: "", open: false};
   }
 
   static propTypes = {
     classes: PropTypes.object,
+    catalogItems: PropTypes.array,
   };
 
   static defaultProps = {
     classes: {},
   };
 
+  searchProduct(data)
+  {
+    if(typeof data === 'object'){
+      Router.push("/product/" + data["slug"] + "/" + data["tagsID"]);
+    }
+    else{
+      //alert('nop')
+    }
+  }
+
   render() {
-    const { classes, Metodo,size } = this.props;
+    const { classes, Metodo , size, catalogItems } = this.props; 
+    const loading = this.state.open && catalogItems.length === 0;     
+    
+    const renderBox = (option) =>{
+      return(
+        <Grid container className={classes.ContenedorPrincipal}>      
+        <Grid item xs={4} sm={1} md={2} lg={2} >
+      <img   
+        className={classes.ImageBorder}           
+        width="80%"
+        height="90%"
+        src={option.photo}                            
+      />   
+      </Grid>         
+
+      <Grid item xs={8} sm={11} md={10} lg={10}>
+      {option.name}               
+      <br/>            
+      {option.price}
+      </Grid>     
+      </Grid>
+
+      );
+    }
+
     return (
       <div className={classes.root}>
+         <Autocomplete
+          classes={{
+            option: classes.option,
+            paper: classes.option
+        }}
+      id="country-select-demo"            
+      // onKeyDown={(event) => {
+      //   if (event.key === 'Enter') {
+      //     event.defaultMuiPrevented = true;          
+      //     this.searchProduct(this.state.Busqueda);          
+      //   }
+      // }}
+      options={catalogItems} 
+      loading={loading}     
+      onChange={(event, newValue) => {
+        this.setState({Busqueda: newValue});
+      }}      
+      onInputChange={(event, newInputValue) => {
+        this.setState({Busqueda: newInputValue});
+      }}
+      getOptionLabel={(option) => option.name}
+      renderOption={(option) => {
+        return renderBox(option) }}
+
+      renderInput={(params) => (
         <TextField
-          variant="outlined"
-          rows="10"
-          placeholder="Buscar producto..."
-          fullWidth
-          className={classes.TextField_}
-          size={size}
-          onChange={(e) => {
-            this.setState({ Busqueda: e.target.value });
-          }}
-          onKeyPress={(ev) => {
-            if (ev.key === "Enter") {
-              //ev.preventDefault();
-              Metodo(this.state.Busqueda);
-            }
-          }}
-          InputProps={{
-            className: classes.input,
-            classes: {
-              notchedOutline: classes.notchedOutline,
-            },
-            endAdornment: (
-              <InputAdornment position="end" className={classes.InputAdornment_}>
-                <div className={classes.Contenedor}><p style={{color:"transparent"}}>ss</p></div>  
-                <Magnify className={classes.Magnify_}  onClick={() => Metodo(this.state.Busqueda)} />                            
-              </InputAdornment>
-            ),
-          }}
-        />
+        {...params}
+        variant="outlined"
+        size={size}
+        placeholder="Buscar producto..."
+        fullWidth
+        className={classes.TextField_}        
+        onKeyPress={(ev) => {
+          if (ev.key === "Enter") {              
+            this.searchProduct(this.state.Busqueda);
+          }
+        }}
+        InputProps={{
+          ...params.InputProps,
+            autoComplete: 'new-password',
+          className: classes.input,
+          classes: {
+            notchedOutline: classes.notchedOutline,
+          },
+          endAdornment: (                      
+            <InputAdornment position="end" className={classes.InputAdornment_}>
+              <div className={classes.Contenedor}><p style={{color:"transparent"}}>s</p></div>   
+              <Magnify className={classes.Magnify_}  onClick={() => this.searchProduct(this.state.Busqueda)} />                             
+            </InputAdornment>            
+          ),
+        }}
+      />
+      )}
+    />      
       </div>
     );
   }
 }
+
 
 export default withStyles(styles)(SearchBar);
