@@ -68,11 +68,11 @@ class ProductGridPage extends Component {
       pageTitle = "Storefront";
     }
 
-
-
-
     return (
-      <Layout withHero shop={shop}>
+      <Layout withHero shop={shop} 
+      catalogItems={catalogItems}
+      routerType={-1}
+      >
         <Helmet
           title={pageTitle}
           meta={[{ name: "descrition", content: shop && shop.description }]}

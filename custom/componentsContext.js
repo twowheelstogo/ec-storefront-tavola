@@ -91,6 +91,9 @@ import TextInput from "components/TextInput";
 import Field from "components/Field";
 import PickupForm from "components/PickupForm";
 import AddressForm from "components/AddressForm";
+import Breadcrumbs from "components/Breadcrumbs";
+import BreadcrumbsSwitch from "components/BreadcrumbsSwitch";
+import OrderDetails from "components/OrderDetails";
 // Providing locales data
 const AddressFormWithLocales = withLocales(AddressForm);
 
@@ -164,5 +167,8 @@ export default {
   CardItems,
   CardItemSelect,
   BillingForm,
-  PickupForm
+  PickupForm,
+  Breadcrumbs,
+  BreadcrumbsSwitch,
+  OrderDetails
 };

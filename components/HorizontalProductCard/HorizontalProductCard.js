@@ -104,8 +104,7 @@ const styles = (theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '5px',
-        flex: "1 1 auto"
-        
+        flex: "1 1 auto",
     },
     titleWeb: {
         fontWeight: 800,
@@ -125,17 +124,18 @@ const styles = (theme) => ({
     productPadding: {
         paddingLeft: '10px',
     },
-    cardMobil:{
+    cardMobil: {
         paddingLeft: '7px',
         paddingRight: '7px',
-        paddingBottom:'15px'
+        paddingBottom: '15px'
     },
-    productPaddingHorizontaal:{
+    productPaddingHorizontaal: {
         paddingLeft: '56px',
         paddingBottom: '20px',
     },
-    gridSpacing:{
-        paddingRight:'30px'
+    gridSpacing: {
+        paddingRight: '30px',
+        paddingBottom: '30px'
     }
 })
 

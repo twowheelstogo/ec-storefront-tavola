@@ -35,6 +35,7 @@ const CatalogLayout = props => {
                 setPageSize={setPageSize}
                 setSortBy={setSortBy}
                 sortBy={sortBy} 
+                id = "catalog"
             />
             {/* <HorizontalProductCard
                 tags={tags}

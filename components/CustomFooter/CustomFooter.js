@@ -92,14 +92,14 @@ const CustomFooter = (props) => {
             {Object.keys(Descripcion.ContenidoMensaje1).map((i) => <CustomItem key={i.toString()}>{Descripcion.ContenidoMensaje1[i]}</CustomItem>)}
           </Grid>
           <Grid key={5} item xs={12} md={3} lg={3} className={classes.items}>
-            <CustomTitle>{Descripcion.Mensaje2}</CustomTitle>
+            {/* <CustomTitle>{Descripcion.Mensaje2}</CustomTitle>
             {Object.keys(Descripcion.ContenidoMensaje2).map((i) => (
                 <Link 
                 key={i.toString()}
                 href={`${Descripcion.ContenidoMensaje2[i].ruta}`}>
                   <CustomItem>{Descripcion.ContenidoMensaje2[i].Titulo}</CustomItem>
                 </Link>
-              ))}
+              ))} */}
           </Grid>
         </Grid>
 

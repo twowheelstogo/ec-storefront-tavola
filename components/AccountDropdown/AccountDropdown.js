@@ -76,9 +76,12 @@ const AccountDropdown = (props) => {
     <Fragment>
       <EntryModal onClose={onClose} resetToken={resetToken} />
       {isAuthenticated ? (
-        <ButtonBase onClick={toggleOpen}>
-          <ViewerInfo viewer={viewer} />
-        </ButtonBase>
+        // <ButtonBase onClick={toggleOpen}>                  
+        // <ViewerInfo viewer={viewer} className={classes.Info_}/> 
+        // </ButtonBase>
+        <IconButton color="inherit" onClick={toggleOpen}>
+          <AccountCircleOutline className={classes.Usuario}/>
+        </IconButton>
       ) : (
         <IconButton color="inherit" onClick={toggleOpen}>
           <AccountCircleOutline className={classes.Usuario}/>
