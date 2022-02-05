@@ -86,12 +86,15 @@ class Layout extends Component {
 
   productList_ = (product_) => {
     let tmpList = [];
-    Object.keys(product_).map((index) => {
-      let items = product_[index];
-      tmpList.push(
-        { name: items["title"], slug: items['slug'], price: items["pricing"][0]["displayPrice"], photo: items['primaryImage']['URLs']['small'], tagsID: items['tagIds'][0] }
-      )
-    });
+    if(product_.lenght > 0){
+      Object.keys(product_).map((index) => {
+        let items = product_[index];
+        console.log(items)
+        tmpList.push(
+          { name: items["title"], slug: items['slug'], price: items["pricing"][0]["displayPrice"], photo: items['primaryImage']['URLs']['small'], tagsID: items['tagIds'][0] }
+        )
+      });
+    }
 
     return tmpList;
   }
