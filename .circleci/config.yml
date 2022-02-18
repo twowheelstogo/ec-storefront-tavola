@@ -11,7 +11,7 @@ version: 2.1
 defaults: &defaults
   environment:
     - CI_SCRIPTS: "npx --quiet --package @reactioncommerce/ci-scripts@1.9.1"
-    - DOCKER_REPOSITORY: "luiscelano/tv-storefront"
+    - DOCKER_REPOSITORY: "loginsolutions/tv-storefront"
     - DOCKER_NAME: "tv-storefront"
     - GITOPS_PR_WEBHOOK: "https://w603b5hwp1.execute-api.us-east-1.amazonaws.com/dev/pullrequests"
     - GLOBAL_CACHE_VERSION: “v3”
