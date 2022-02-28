@@ -13,7 +13,7 @@ networks:
 
 services:
   web:
-    image: luiscelano/tv-storefront:pre-launch
+    image: loginsolutions/tv-storefront:pre-launch
     env_file:
       - ./.env
     networks:
