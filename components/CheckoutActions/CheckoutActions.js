@@ -341,7 +341,7 @@ class CheckoutActions extends Component {
       const fulfillmentGroups = checkout.fulfillmentGroups.map((group) => {
         const { data } = group;
         let { selectedFulfillmentOption } = group;
-
+        console.log('compra del carrito ', cart.items)
         const items = cart.items.map((item) => ({
           addedAt: item.addedAt,
           price: item.price.amount,

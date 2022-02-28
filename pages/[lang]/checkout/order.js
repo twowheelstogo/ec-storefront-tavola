@@ -49,7 +49,16 @@ const styles = (theme) => ({
   Dividers:{
     ["@media (min-width:600px)"]: {
       height: '60px',   
-    }, }
+    }, },
+
+  TitleThancks:{
+    ["@media (min-width:px)"]: {
+      fontSize: '16px'
+    },
+    ["@media (min-width:600px)"]: {
+      fontSize: '16px'
+    },
+  }
 });
 
 class CheckoutComplete extends Component {
@@ -108,13 +117,7 @@ class CheckoutComplete extends Component {
           <Grid item xs={false} md={3} /> {/* MUI grid doesn't have an offset. Use blank grid item instead. */}
           <Grid item xs={12} md={6}>
             <Grid item className={classes.orderThankYou} xs={12} md={12}>
-              <Typography className={classes.title} variant="h6">Thank you for your order</Typography>
-              <Typography variant="body1">
-                {"Your order ID is:"} <strong>{order.referenceId}</strong>
-              </Typography>
-              <Typography variant="body1">
-                {"We've sent a confirmation email to:"} <strong>{order.email}</strong>
-              </Typography>
+              <Typography className={classes.TitleThancks}>GRACIAS POR TU COMPRA</Typography>
             </Grid>
             <Grid item xs={12} md={12}>
               <OrderCard isExpanded={true} order={order} />

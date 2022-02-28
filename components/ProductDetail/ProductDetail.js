@@ -216,6 +216,7 @@ class ProductDetail extends Component {
   	}
 
   	const productPrice = this.determineProductPrice();
+	console.log(productPrice)
   	const compareAtDisplayPrice = (productPrice.compareAtPrice && productPrice.compareAtPrice.displayAmount) || null;
 
 
