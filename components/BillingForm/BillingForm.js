@@ -10,13 +10,10 @@ import { Button } from "@material-ui/core";
 const styles = theme => ({
 	input: {		
 		width: "100%",
-		border: "none",
-		borderRadius: "5px",
-		height: "40px",		
-		padding: "10px",
+		border: "none",				
 		backgroundColor:"#F9F9F9",
 		color: "#000",
-		bordeRadius: "4px",		
+		bordeRadius: "4px",			
 	},
 	label_ : {
 		marginTop:"10px"

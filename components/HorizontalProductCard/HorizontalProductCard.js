@@ -171,7 +171,7 @@ const HorizontalProductCard = props => {
     };
 
     const { tags, classes, components: { ProgressiveImage } } = props
-    console.log(props)
+    console.log('props',props)
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
     return (
@@ -202,8 +202,6 @@ const HorizontalProductCard = props => {
                                                                     <img src="/images/placeholder.gif" />
                                                                 )
                                                             }
-                                                            <Div>
-                                                            </Div>
                                                             <CardContent>
                                                                 <Div>
                                                                     <StyledTitle>{values.title}</StyledTitle>

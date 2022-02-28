@@ -30,8 +30,10 @@ class AddressForm extends Component {
             address: "",
             description: "",
             reference: "",
+            phone: "",
+            receiver: ""
         },
-        validator: getRequiredValidator("address", "description")
+        validator: getRequiredValidator("address", "description","phone","receiver")
     }
     submit = () => {
         this._form.submit();
@@ -97,29 +99,30 @@ class AddressForm extends Component {
                                 <ErrorsBlock names={["description"]} />
                             </Field>
                         </ColFull>
-                        {/* <ColFull>
-                            <FieldTitle>{"Quién recibe?"}</FieldTitle>
-                            <Field name="Receptor" label="Obligatorio" labelFor={receptorInputId} isRequired>
+                        <ColFull>
+                            <FieldTitle>{"¿Quién recibe?"}</FieldTitle>
+                            <Field name="receiver" label="Obligatorio" labelFor={receptorInputId} isRequired>
                                 <TextInput
                                     id={receptorInputId}
-                                    name="Receptor"
+                                    name="receiver"
                                     placeholder="Escribe aqui..."
+                                    
                                 />
-                                <ErrorsBlock names={["Receptor"]} />
+                                <ErrorsBlock names={["receiver"]} />
                             </Field>
                         </ColFull>
                         <ColFull>
                             <FieldTitle>{"Teléfono de quién recibe"}</FieldTitle>
-                            <Field name="Teléfono" label="Obligatorio" labelFor={telefonoInputId} isRequired>
+                            <Field name="phone" label="Obligatorio" labelFor={telefonoInputId} isRequired>
                                 <TextInput
                                     id={telefonoInputId}
-                                    name="Teléfono"
-                                    placeholder="Escribe aqui..."
+                                    name="phone"
+                                    placeholder="Numero de Telefono e.g: 55555555"
                                     type="number"
                                 />
-                                <ErrorsBlock names={["Teléfono"]} />
+                                <ErrorsBlock names={["phone"]} />
                             </Field>
-                        </ColFull> */}
+                        </ColFull>
                     </Grid>
                 </Form>
             </Fragment>

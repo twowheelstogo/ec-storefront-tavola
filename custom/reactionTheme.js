@@ -7,7 +7,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   // design in the layout
   layout: {
-    mainContentMaxWidth: "1800px",
+    mainContentMaxWidth: "1930px",
     mainLoginMaxWidth: "1024px"
   },
   palette: {
